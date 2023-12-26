@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dp.mapper.ProdDetailsMapper">
+
+
+
+
+
+    <!--  public List<ProdDetails> finds(Map<String,Object> map);-->
+    <select id="finds" resultType="ProdDetails">
+        select * from prod_details
+        <where>
+            <if test="pId!=null">
+                and p_id = #{pId}
+            </if>
+
+            <if test="pName!=null  and &quot;&quot;!=pName">
+                <bind name="_pName" value="'%' + _parameter.pName + '%'"/>
+                and p_name like #{_pName}
+            </if>
+
+
+
+        </where>
+
+        <if test="page!=null  and limit !=null">
+            <bind name="_page" value="(_parameter.page-1)*_parameter.limit"/>
+            limit #{_page},#{limit}
+        </if>
+
+    </select>
+
+    <!--int total(Map<String,Object> map);-->
+
+    <select id="total" resultType="int">
+        select count(*) from  prod_details
+        <where>
+            <if test="pId!=null">
+                and p_id = #{pId}
+            </if>
+
+
+            <if test="pName!=null  and &quot;&quot;!=pName">
+                <bind name="_pName" value="'%' + _parameter.pName + '%'"/>
+                and p_name like #{_pName}
+            </if>
+
+
+
+        </where>
+
+    </select>
+
+
+
+
+
+
+
+    <select id="FindBalance" resultType="com.dp.entity.ProdDetails">
+        select stock from prod_details where p_id = #{obj.pId}
+    </select>
+
+    <select id="FindName" resultType="com.dp.entity.ProdDetails">
+        select p_name from prod_details where p_id = #{obj.pId}
+    </select>
+
+</mapper>

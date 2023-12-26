@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>充值</title>
+    <script src="../js/vue.js"></script>
+    <link href="https://cdn.bootcss.com/element-ui/2.4.5/theme-chalk/index.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/element-ui/2.6.1/index.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <script src="../layui/layui.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="../css/orderPay.css"/>
+
+
+</head>
+<body>
+
+
+<div id="orderPay" style="margin: 0 50px 0 0;">
+
+
+
+    <div style="margin-left: 50px;margin: 0 50px 0 0;width: 110%;">
+
+        <div style="background-color: #01AAED; width: 100%;line-height: 90px;font-size: 15px;border: 1px solid gray;color: white;">
+            <img src="../image/orderP.png" style="color: #FFD471;margin-left: 100px;"></i>
+            <span style="font-size: 30px;">填写订单</span>
+
+        </div>
+
+
+        <div style="width: 100%; ">
+
+
+        <!--    <span><br></span>
+            <div style="background-color: #DCF0F7;width: 85%;line-height: 100px; margin-left: 4%;">
+                <div style="margin: 0 30px 0 30px;">
+                    <img src="../image/tx2.jpg" style="width: 80px;height: 80px;border-radius: 50%;overflow: hidden;"/>
+                    <span> 充值账号：{{uPhone}}</span>
+                    <span name="balance" style="float: right;"> 账户余额：￥{{balance}}</span>
+                </div>
+            </div> -->
+			
+			<!-- 主体 -->
+			<div class="main" id="cart">
+			    <div class="cart-wrap">
+			        <div class="cart-goods-list">
+			            <div class="list-head">
+			                <div class="col-pic"></div>
+			                <div class="col-name">商品名字</div>
+			                <div class="col-price">单价</div>
+			                <div class="col-num">数量</div>
+			                <div class="col-total">小计</div>
+			            </div>
+			            <div class="list-body" v-for="(p,index) in prods" :key="index">
+			
+			                
+			                <div class="col col-pic"><a href="javascript:void(0)" @click="getDetail(p.pid)"><img :src="p.param_image"></a></div>
+			                <div class="col col-name" style="font-size: 18px;"><a href="javascript:void(0)" @click="getDetail(p.pid)">{{p.p_name}}</a>
+			                </div>
+			                <div class="col col-price">{{price}}元</div>
+			                <div class="col col-num">
+			                    <div class="col-num-d">
+		                     	   <div class="col-num-num">{{cart.c}}</div>
+			                    </div>
+			                </div>
+			                <div class="col col-total" style="color:#ff6700;">{{p.c_number*p.price}}</div>
+			                <div class="col col-action"><a href="javascript:void(0)" @click="remove(this,p.c_id)">X</a></div>
+			                <div class="col-parameter">{{p.color}}&nbsp;&nbsp;{{p.memory_size}}</div>
+			
+			            </div>
+			        </div>
+			       
+			
+			    </div>
+			</div>
+			
+			
+
+            <div style="margin: 30px 0 0 50px;">
+
+                
+
+                <div>
+					<div style="height: 50px;">
+                    <span> 支付方法 ： </span>
+
+                    <span style="margin-left: 50px;">
+                        <input type="radio" name="paymentMethod" value="alipay" title="支付宝支付"
+                               v-model="selectedPaymentMethod">
+                        <img src="../image/zfbPay.png" @click="selectPayment('alipay')"
+                             :class="{ 'selected': selectedPaymentMethod === 'alipay' }">支付宝支付
+                    </span>
+					<span>
+					    <input type="radio" name="paymentMethod" value="wechat" title="微信支付"
+					           v-model="selectedPaymentMethod">
+					    <img src="../image/wxPay.png" @click="selectPayment('wechat')"
+					         :class="{ 'selected': selectedPaymentMethod === 'wechat' }">微信支付
+					</span>
+					</div>
+
+				   <div style="line-height: 100px;font-size: 20px;margin: 40px 0 70px 0;">
+					   <span>应付金额： {{price}} 元</span>
+				   </div>
+
+                    <div style="margin-left: 40%;">
+                        <button type="button" class="layui-btn layui-btn-lg" @click="pay()">提交订单</button>
+                    </div>
+
+                </div>
+
+                <div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="../layui/layui.js"></script>
+<script src="../js/axios.js"></script>
+
+
+<script>
+
+    let app = new Vue({
+        el: '#orderPay',
+        data: {
+			cId: 0,
+			cart:[],
+			price: 0,
+        },
+        methods: {
+
+			// 打开支付窗口
+			openPaymentWindow(url) {
+				return new Promise(function(resolve, reject) {
+					const _this = this;
+					const width = 800;
+					const height = 600;
+					const left = window.innerWidth / 2 - width / 2;
+					const top = window.innerHeight / 2 - height / 2;
+
+					let paymentWindow = window.open( url, 'payment', 'width=${width},height=${height},left=${left},top=${top}'); // 打开支付页面的弹窗
+					paymentWindow.focus(); // 将焦点设置到支付页面的弹窗
+
+
+
+					// 监听支付窗口的关闭事件
+					const checkWindowClosed = setInterval(function() {
+						if (paymentWindow.closed) {
+							clearInterval(checkWindowClosed); // 停止定时器
+							resolve(); // 支付窗口关闭时调用resolve方法
+						}
+					}, 1000); // 每隔1秒检查支付窗口是否关闭
+
+				});
+			},
+			
+			pay() {
+				let _this = this;
+
+				//支付宝沙箱http://localhost:8888/alipay/pay?subject=测试商品&traceNo= 666&totalAmount=1000
+				axios.get("../pay", {
+					params: {
+						// subject:'商品名',
+						// traceNo: 数量,
+						total_amount: _this.price  // 传递金额参数给后端
+					}
+				}).then(response => {
+					layer.open({
+						title: '订单发送完毕',
+						content: '点击跳转支付界面',
+						btn: ['确定'],
+						yes: function (index, layero) {
+							// 关闭弹窗
+							layer.close(index);
+							_this.openPaymentWindow(response.data).then(()=> {
+								axios.get('../queryTrade').then((response)=>{
+									if (response.status == 200) {
+										layer.open({
+											title: '支付成功',
+											content: '点击关闭',
+											btn: ['确定'],
+											yes: function (index, layero) {
+												// 支付成功 加上你的操作
+												axios.post('../user?op=updateInfo', data).then((rs) => {
+													layer.msg('充值成功');
+													//刷新
+													_this.loading();
+												}).catch(function (error) {
+													layer.msg('充值失败');
+												});
+											}
+										});
+									}
+								})
+
+							});
+
+
+
+
+
+						}
+					});
+
+				}).catch(error => {
+					layer.msg(error);
+				});
+			},
+
+			/**
+             * 统一请求处理
+             */
+            loading() {
+                const _this = this;
+
+				axios.get('../cart?op=selectCart', {
+					params: {
+						cId: _this.cId
+					}
+				}).then(response => {
+					if (response.status === 200) {
+						_this.cart = response.data.data;
+					}
+				}).catch(error => {
+					console.error(error);
+				});
+
+
+
+            },
+        },
+        mounted() {
+            const _this = this;
+			_this.cId = localStorage.getItem("cId");
+			_this.price = localStorage.getItem("totalPrice")
+			alert(_this.cId);
+			_this.loading();
+        }
+
+    })
+
+</script>
+
+</body>
+</html>
+

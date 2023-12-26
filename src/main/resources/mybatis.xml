@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+
+
+    <properties resource="db.properties"></properties>
+
+
+
+
+    <settings>
+
+        <!--开启二级缓存-->
+        <setting name="cacheEnabled" value="true"/>
+
+        <!--是否开区驼峰命名自动映射，即从经典数据库列名 A_COLUMN 映射到经典 java 属性名 aColumn-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="jdbcTypeForNull" value="NULL"/>
+        
+        <!--延迟加载的全局开关。 当开启时，所有关联对象都会延迟加载。特定关联关系中通过设置 fetchType 属性来覆盖该项的开关状态 -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
+
+
+
+
+    <typeAliases>
+        <package name="com.dp.entity"/>
+
+    </typeAliases>
+
+
+
+
+
+
+
+    <environments default="mysql">
+        <environment id="mysql">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${mysql.driverName}"/>
+                <property name="url" value="${mysql.url}"/>
+                <property name="username" value="${mysql.user}"/>
+                <property name="password" value="${mysql.password}"/>
+            </dataSource>
+        </environment>
+
+
+        <environment id="oracle">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${oracle.driverName}"/>
+                <property name="url" value="${oracle.url}"/>
+                <property name="username" value="${oracle.user}"/>
+                <property name="password" value="${oracle.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+
+
+
+    <databaseIdProvider type="DB_VENDOR">
+        <property name="SQL Server" value="sqlserver"/>
+        <property name="MySQL" value="mysql"/>
+        <property name="Oracle" value="oracle" />
+    </databaseIdProvider>
+
+
+
+
+
+    <!--映射文件配置-->
+    <mappers>
+
+
+        <!--<mapper resource="mapper/UserConfigMapper.xml"/>-->
+      <!--  <mapper resource="mapper/UserMapperPlus.xml"/>-->
+        
+        
+        <package name="com.dp.mapper"/>
+    </mappers>
+</configuration>

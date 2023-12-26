@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dp.mapper.ShoppingCartMapper">
+
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="cId">
+        insert into shopping_cart(u_id, param_id, c_number)
+        values (#{obj.uId}, #{obj.paramId}, #{obj.cNumber})
+    </insert>
+
+    <update id="updateNum">
+        update shopping_cart
+        set c_number = c_number + #{num}
+        where c_id = #{obj.cId}
+    </update>
+
+    <delete id="remove">
+        delete
+        from shopping_cart
+        where c_id = #{obj.cId}
+    </delete>
+
+
+    <select id="finds" resultType="java.util.Map">
+        SELECT p_name,
+               param_image,
+               c_number,
+               price,
+               c_id,
+               color,
+               memory_size,
+               pm.p_id pid
+        FROM prod_details pd
+                 INNER JOIN parameter pm ON pd.p_id = pm.p_id
+                 INNER JOIN shopping_cart s ON s.param_id = pm.param_id
+        WHERE s.u_id = #{uId}
+    </select>
+
+    <select id="find" resultType="com.dp.entity.ShoppingCart">
+        select c_id
+        from shopping_cart
+        where u_id = #{obj.uId}
+          and param_id = #{obj.paramId}
+    </select>
+
+    <select id="selected" resultType="java.util.Map">
+        select (c_number * price)  price
+        from shopping_cart s
+                 inner join  parameter p on s.param_id = p.param_id
+        where c_id = #{obj.cId}
+    </select>
+    <select id="selectCart" resultType="com.dp.entity.ShoppingCart">
+        SELECT p_name,
+               param_image,
+               c_number,
+               price,
+               c_id,
+               color,
+               memory_size,
+               pm.p_id pid
+        FROM prod_details pd
+                 INNER JOIN parameter pm ON pd.p_id = pm.p_id
+                 INNER JOIN shopping_cart s ON s.param_id = pm.param_id
+        WHERE s.u_id = #{uId} AND s.c_id = #{cId}
+    </select>
+
+</mapper>

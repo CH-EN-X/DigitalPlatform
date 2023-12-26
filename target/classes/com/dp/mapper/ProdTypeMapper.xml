@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dp.mapper.ProdTypeMapper">
+
+
+    <!--   List<ProdDetails> finds(Map<String,Object> map);-->
+    <select id="finds" resultType="ProdDetails">
+
+        SELECT * FROM prod_type JOIN prod_details ON prod_type.t_id = prod_details.t_id
+
+
+
+
+        <where>
+            <if test="type!=null">
+                and t_name = #{type}
+            </if>
+
+
+
+
+
+        </where>
+
+        <if test="page!=null  and limit !=null">
+            <bind name="_page" value="(_parameter.page-1)*_parameter.limit"/>
+            limit #{_page},#{limit}
+        </if>
+
+    </select>
+
+    <!--int total(Map<String,Object> map);-->
+
+    <select id="total" resultType="int">
+        SELECT count(*) FROM prod_type JOIN prod_details ON prod_type.t_id = prod_details.t_id
+
+
+        <where>
+            <if test="type!=null">
+                and t_name = #{type}
+            </if>
+
+
+
+
+        </where>
+
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
