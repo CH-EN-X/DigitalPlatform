@@ -9,7 +9,7 @@ import java.util.Map;
 
 public interface ShoppingCartMapper extends BaseMapper<ShoppingCart> {
 
-    ShoppingCart selectCart(@Param("cID") Integer cId);
+    Map<String,Object> selectCart(@Param("cId") Integer cId);
 
     Integer add(@Param("obj") ShoppingCart shoppingCart);
 

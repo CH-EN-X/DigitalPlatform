@@ -4,6 +4,7 @@ import com.dp.entity.ShoppingCart;
 import com.dp.service.IShoppingCartService;
 import com.dp.service.impl.ShoppingCartServiceImpl;
 import com.dp.vo.ResultVO;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/cart")
 public class ShoppingCartController extends BaseController{
@@ -36,15 +38,17 @@ public class ShoppingCartController extends BaseController{
         }else if("selected".equals(op)){
             doSelected(req,resp);
         }else if("selectCart".equals(op)){
-            doSelectByCId(req,resp);
+            doSelectCart(req,resp);
         }else {
             resp.getWriter().print("no such Methods...");
         }
     }
 
-    private void doSelectByCId(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void doSelectCart(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Integer cId = Integer.parseInt(req.getParameter("cId"));
-        printToJson(resp, service.selectCart(cId));
+        PrintWriter writer = resp.getWriter();
+        Gson gson = new Gson();
+        writer.write(gson.toJson(service.selectCart(cId)));
     }
 
     private void doSelected(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

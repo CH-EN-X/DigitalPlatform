@@ -3,7 +3,9 @@ package com.dp.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dp.entity.ShoppingCart;
 import com.dp.mapper.ShoppingCartMapper;
+import com.dp.mapper.UserMapper;
 import com.dp.service.IShoppingCartService;
+import com.dp.util.MybatisPlusUtil;
 import com.dp.util.MybatisUtil;
 import com.dp.util.ResultEnum;
 import com.dp.vo.ResultVO;
@@ -26,7 +28,10 @@ public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartMapper, Sho
             return new ResultVO(ResultEnum.ERROR);
         }
 
-        ShoppingCart cart = mapper.selectCart(cId);
+        SqlSession session = MybatisPlusUtil.getSession();
+        mapper = session.getMapper(ShoppingCartMapper.class);
+
+        Map<String,Object> cart = mapper.selectCart(cId);
 
         return new ResultVO(ResultEnum.SUCCESS,cart);
     }

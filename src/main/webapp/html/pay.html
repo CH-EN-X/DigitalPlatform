@@ -44,32 +44,28 @@
 			<!-- 主体 -->
 			<div class="main" id="cart">
 			    <div class="cart-wrap">
-			        <div class="cart-goods-list">
-			            <div class="list-head">
-			                <div class="col-pic"></div>
-			                <div class="col-name">商品名字</div>
-			                <div class="col-price">单价</div>
-			                <div class="col-num">数量</div>
-			                <div class="col-total">小计</div>
-			            </div>
-			            <div class="list-body" v-for="(p,index) in prods" :key="index">
-			
-			                
-			                <div class="col col-pic"><a href="javascript:void(0)" @click="getDetail(p.pid)"><img :src="p.param_image"></a></div>
-			                <div class="col col-name" style="font-size: 18px;"><a href="javascript:void(0)" @click="getDetail(p.pid)">{{p.p_name}}</a>
-			                </div>
-			                <div class="col col-price">{{price}}元</div>
-			                <div class="col col-num">
-			                    <div class="col-num-d">
-		                     	   <div class="col-num-num">{{cart.c}}</div>
-			                    </div>
-			                </div>
-			                <div class="col col-total" style="color:#ff6700;">{{p.c_number*p.price}}</div>
-			                <div class="col col-action"><a href="javascript:void(0)" @click="remove(this,p.c_id)">X</a></div>
-			                <div class="col-parameter">{{p.color}}&nbsp;&nbsp;{{p.memory_size}}</div>
-			
-			            </div>
-			        </div>
+					<div class="cart-goods-list">
+						<div class="list-head">
+							<div class="col-pic"></div>
+							<div class="col-name">商品名字</div>
+							<div class="col-price">单价</div>
+							<div class="col-num">数量</div>
+							<div class="col-total">小计</div>
+						</div>
+						<div class="list-body">
+							<div class="col col-pic"><a href="javascript:void(0)" @click="getDetail(cart.pid)"><img :src="cart.param_image"></a></div>
+							<div class="col col-name" style="font-size: 18px;"><a href="javascript:void(0)" @click="getDetail(cart.pid)">{{ cart.p_name }}</a></div>
+							<div class="col col-price">{{ cart.price }}元</div>
+							<div class="col col-num">
+								<div class="col-num-d">
+									<div class="col-num-num">{{ cart.c_number }}</div>
+								</div>
+							</div>
+							<div class="col col-total" style="color:#ff6700;font-size: 18px">{{ cart.c_number * cart.price }}</div>
+
+							<div class="col-parameter">{{ cart.color }}&nbsp;&nbsp;{{ cart.memory_size }}</div>
+						</div>
+					</div>
 			       
 			
 			    </div>
@@ -77,33 +73,29 @@
 			
 			
 
-            <div style="margin: 30px 0 0 50px;">
+            <div style="margin: 30px 0 0 170px;float: left">
 
-                
+
 
                 <div>
-					<div style="height: 50px;">
+					<div style="height: 50px;font-size: 16px;margin-top: 30px">
                     <span> 支付方法 ： </span>
 
-                    <span style="margin-left: 50px;">
-                        <input type="radio" name="paymentMethod" value="alipay" title="支付宝支付"
-                               v-model="selectedPaymentMethod">
-                        <img src="../image/zfbPay.png" @click="selectPayment('alipay')"
-                             :class="{ 'selected': selectedPaymentMethod === 'alipay' }">支付宝支付
-                    </span>
-					<span>
-					    <input type="radio" name="paymentMethod" value="wechat" title="微信支付"
-					           v-model="selectedPaymentMethod">
-					    <img src="../image/wxPay.png" @click="selectPayment('wechat')"
-					         :class="{ 'selected': selectedPaymentMethod === 'wechat' }">微信支付
-					</span>
+						<span style="margin-left: 50px;">
+							<input type="radio" name="paymentMethod" value="alipay" title="支付宝支付" v-model="selectedPaymentMethod" checked>
+							<img src="../image/zfbPay.png" :class="{ 'selected': selectedPaymentMethod === 'alipay' }">支付宝支付
+						</span>
+<!--						<span>-->
+<!--							<input type="radio" name="paymentMethod" value="wechat" title="微信支付" v-model="selectedPaymentMethod">-->
+<!--							<img src="../image/wxPay.png" :class="{ 'selected': selectedPaymentMethod === 'wechat' }">微信支付-->
+<!--						</span>-->
 					</div>
 
 				   <div style="line-height: 100px;font-size: 20px;margin: 40px 0 70px 0;">
 					   <span>应付金额： {{price}} 元</span>
 				   </div>
 
-                    <div style="margin-left: 40%;">
+                    <div style="margin-left: 500px;">
                         <button type="button" class="layui-btn layui-btn-lg" @click="pay()">提交订单</button>
                     </div>
 
@@ -132,8 +124,10 @@
 			cId: 0,
 			cart:[],
 			price: 0,
+			selectedPaymentMethod: 'alipay',
         },
         methods: {
+
 
 			// 打开支付窗口
 			openPaymentWindow(url) {
@@ -187,12 +181,16 @@
 											btn: ['确定'],
 											yes: function (index, layero) {
 												// 支付成功 加上你的操作
-												axios.post('../user?op=updateInfo', data).then((rs) => {
-													layer.msg('充值成功');
-													//刷新
-													_this.loading();
-												}).catch(function (error) {
-													layer.msg('充值失败');
+												axios.get('../cart?op=remove&cId='+_this.cId).then(rs =>{
+													if(rs.status == 200){
+
+														// axios.get('../cart?op=finds&uId=' + uId).then(rs => {
+														// 	if (rs.status == 200) {
+														// 		this.prods = rs.data.data;
+														// 	}
+														// });
+														window.location.href = 'ShoppingCart.html';
+													}
 												});
 											}
 										});

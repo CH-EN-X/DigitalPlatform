@@ -209,7 +209,7 @@
 }
 
 .cart-goods-list{
-	width: 100%;
+	width: 85%;
 }
 
 .list-head{
@@ -284,10 +284,9 @@
 .col-num-d{
 	width: 100%;
 	margin-top: 35px;
-	font-size: 20px;
-	border: 1px solid gainsboro;
+	font-size: 18px;
 	height: 38px;
-	line-height: 38px;
+	line-height: 28px;
 }
 
 .col-num-reduce{
@@ -296,11 +295,7 @@
 	float: left;
 }
 
-.col-num-num{
-	height: 38px;
-	width: 74px;
-	float: left;
-}
+
 
 .col-num-add{
 	height: 38px;
@@ -337,14 +332,14 @@
 
 .col-parameter{
 	position: absolute;
-	left: 25%;
-	top: 63%;
+	left: 30%;
+	top: 37%;
 	color: #ff6700;
 }
 
 .cart-pay{
 	margin-top: 40px;
-	width: 100%;
+	width: 80%;
 	height: 60px;
 	border: 1px solid gainsboro;
 }

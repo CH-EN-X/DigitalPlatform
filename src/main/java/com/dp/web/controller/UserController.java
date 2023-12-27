@@ -23,7 +23,7 @@ import java.util.Map;
 public class UserController  extends  BaseController{
 
     @Autowired
-    private IUserService service ;//= new UserServiceImpl();
+    private IUserService service = new UserServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -29,11 +29,11 @@ public class OrderTable implements Serializable {
     
     private Integer uId;
     
-    private Date rderTime;
+    private String rderTime;
     
     private Object totalPrice;
     
-    private Date totalTime;
+    private String totalTime;
     
     private Integer oState;
     

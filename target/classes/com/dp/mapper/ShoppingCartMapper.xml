@@ -51,7 +51,7 @@
                  inner join  parameter p on s.param_id = p.param_id
         where c_id = #{obj.cId}
     </select>
-    <select id="selectCart" resultType="com.dp.entity.ShoppingCart">
+    <select id="selectCart" resultType="java.util.Map">
         SELECT p_name,
                param_image,
                c_number,
@@ -63,7 +63,7 @@
         FROM prod_details pd
                  INNER JOIN parameter pm ON pd.p_id = pm.p_id
                  INNER JOIN shopping_cart s ON s.param_id = pm.param_id
-        WHERE s.u_id = #{uId} AND s.c_id = #{cId}
+        WHERE s.c_id = #{cId}
     </select>
 
 </mapper>
