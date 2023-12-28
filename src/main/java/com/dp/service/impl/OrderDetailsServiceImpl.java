@@ -17,10 +17,10 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
 
     @Override
     public ResultVO add(OrderDetails order) {
-        if ("".equals(order.getPId()) || order.getPId() == null ||
-            "".equals(order.getPNumber()) || order.getPNumber() == null){
-            return new ResultVO(ResultEnum.ERROR);
-        }
+//        if ("".equals(order.getPId()) || order.getPId() == null ||
+//            "".equals(order.getPNumber()) || order.getPNumber() == null){
+//            return new ResultVO(ResultEnum.ERROR);
+//        }
         SqlSession session = MybatisPlusUtil.getSession();
         orderDetailsMapper = session.getMapper(OrderDetailsMapper.class);
         orderDetailsMapper.insert(order);

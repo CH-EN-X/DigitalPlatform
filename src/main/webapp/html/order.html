@@ -93,30 +93,35 @@
 		      <el-table-column
 		        prop="image"
 		        label="图片"
-		        width="180">
+		        width="100">
 				<template slot-scope="scope">
-				    <img :src="scope.row.image" style="width: 50px; height: 50px;">
+				    <img :src="scope.row.p_image" style="width: 50px; height: 50px;">
 				</template>
 		      </el-table-column>
 		      <el-table-column
-		        prop="name"
+		        prop="p_name"
 		        label="商品名称"
-		        width="180">
+		        width="130">
 		      </el-table-column>
 		      <el-table-column
-		        prop="param"
-		        label="参数">
+		        prop="memory_size"
+		        label="参数"
+				width="130">
 		      </el-table-column>
+			  <el-table-column
+			    prop="color"
+			    label="颜色">
+			  </el-table-column>
 			  <el-table-column
 			    prop="price"
 			    label="单价">
 			  </el-table-column>
 			  <el-table-column
-			    prop="number"
+			    prop="p_number"
 			    label="数量">
 			  </el-table-column>
 			  <el-table-column
-			    prop="total"
+			    prop="total_price"
 			    label="实付">
 			  </el-table-column>
 		    </el-table>
@@ -135,6 +140,7 @@
  let app = new Vue({
         el: '#order',
         data: {
+			uId:0,
             order: [{
                         image: '../image/pms_1691494291.57494192.png',
                         name: 'Redmi 12 5G',
@@ -147,18 +153,26 @@
         },
         methods: {
 
-			//统一请求
+			//统一请求_this.uId
 			getAllInfo(){
-				axios.get('/order?op=finds').then((response) =>{
-					if (response.code == 200){
-						_this.order = response.data;
-					}
+				const _this = this;
+				axios.get('../order?op=finds',{params: {uId: 2} } )
+						.then((response) =>{
+						if (response.data.code == 200){
+							_this.order = response.data.data;
+						}
+						// for (let i = 0; i < _this.order.length; i++) {
+						// 	_this.order[i].image = _this
+						// }
+							console.log(_this.order)
 				})
 			}
 		},
 		mounted() {
 		    const _this = this;
+			_this.uId = localStorage.getItem("uId");
 			_this.getAllInfo();
+
 		}
  });
       

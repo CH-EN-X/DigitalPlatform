@@ -168,6 +168,7 @@
 
 				//session里存储   uId
 				$.get("../user",{op:"lg",uId:arr[0].uId},function (rs) {
+					localStorage.setItem("uId",arr[0].uId);
 
 					if(rs > 0){
 

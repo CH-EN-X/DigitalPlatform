@@ -17,6 +17,8 @@
                o_price,
                p.param_id,
                p.color,
+               p.price,
+               p.memory_size,
                pd.p_id,
                pd.p_name,
                pd.p_image

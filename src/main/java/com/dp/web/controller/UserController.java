@@ -194,7 +194,7 @@ public class UserController  extends  BaseController{
             User user = parseRequest(req,User.class);
             //System.out.println("id ===="+req.getParameter("id"));
             int id = uId;
-            User vo = service.getUserById(id); //TODO 登录时获取id token
+            User vo = service.getUserById(id);
             //System.out.println("vo = " + vo);
             printToJson(resp,vo);
 

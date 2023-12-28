@@ -25,11 +25,11 @@ public class OrderTableServiceImpl implements OrderTableService {
 
     @Override
     public ResultVO add(OrderTable order) {
-        //地址和用户id不能为空
-        if ("".equals(order.getAId()) || order.getAId() == null ||
-            "".equals(order.getUId()) || order.getUId() == null){
-            return new ResultVO(ResultEnum.ERROR);
-        }
+//        //地址和用户id不能为空
+//        if ("".equals(order.getAId()) || order.getAId() == null ||
+//            "".equals(order.getUId()) || order.getUId() == null){
+//            return new ResultVO(ResultEnum.ERROR);
+//        }
         SqlSession session = MybatisPlusUtil.getSession();
         orderTableMapper = session.getMapper(OrderTableMapper.class);
 

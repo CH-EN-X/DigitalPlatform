@@ -2,6 +2,7 @@ package com.dp.web.controller;
 
 import com.dp.entity.OrderDetails;
 import com.dp.entity.OrderTable;
+import com.dp.entity.ShoppingCart;
 import com.dp.service.OrderDetailsService;
 import com.dp.service.OrderTableService;
 import com.dp.service.impl.OrderDetailsServiceImpl;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.Map;
 
 @WebServlet("/order")
 public class OrderTableController extends BaseController{
@@ -35,7 +38,7 @@ public class OrderTableController extends BaseController{
         String op = req.getParameter("op");
         if("finds".equals(op)){
             doFinds(req,resp);
-        } else if("insert".equals(op)){
+        } else if("addOrder".equals(op)){
             doAdd(req,resp);
         } else{
             printToJson(resp,"NO method ......");
@@ -43,27 +46,31 @@ public class OrderTableController extends BaseController{
     }
 
     private void doAdd(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        OrderTable order = parseRequest(req,OrderTable.class);
-        OrderDetails orderDetails = parseRequest(req,OrderDetails.class);
+        OrderTable orderTable = parseRequest(req, OrderTable.class);
+        printToJson(resp,service.add(orderTable));
 
-        //先插入OrderTable，获取自增的oId赋给
-        printToJson(resp,service.add(order));
-        orderDetails.setOId(order.getOId());
+        OrderDetails orderDetails = parseRequest(req,OrderDetails.class);
+        orderDetails.setOId(orderTable.getOId());
         printToJson(resp,serviceDetails.add(orderDetails));
+
+
+//        Map<String,Object> list = parseRequest(req);
+//        System.out.println("list ======= " + list);
+//        OrderTable order = parseRequest(req,OrderTable.class);
+//        OrderDetails orderDetails = parseRequest(req,OrderDetails.class);
+//
+//        //先插入OrderTable，获取自增的oId赋给
+//        printToJson(resp,service.add(order));
+//        orderDetails.setOId(10);//orderDetails.setOId(order.getOId());
+//        //再插入OrderDetails
+//        printToJson(resp,serviceDetails.add(orderDetails));
     }
 
     private void doFinds(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         OrderTable order = parseRequest(req,OrderTable.class);
 
-        //得到session
-        HttpSession httpSession = req.getSession();
-        //取出
-        int uId = (Integer) httpSession.getAttribute("uId");
-        //order.setUId(2);
-
-//        PrintWriter writer = resp.getWriter();
-//        Gson gson = new Gson();
-//        writer.write(gson.toJson(service.finds(order)));
+        int uId = Integer.parseInt(req.getParameter("uId"));
+        order.setUId(uId);
 
         printToJson(resp,service.finds(order));
     }
