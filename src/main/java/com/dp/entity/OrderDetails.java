@@ -24,7 +24,7 @@ public class OrderDetails implements Serializable {
 
     private Integer oId;
     
-    private Integer pId;
+    private Integer paramId;
     
     private Integer pNumber;
     

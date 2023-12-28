@@ -125,6 +125,7 @@
         el: '#orderPay',
         data: {
             cId: 0,
+            uId:0,
             cart: [],
             price: 0,
             selectedPaymentMethod: 'alipay',
@@ -196,14 +197,16 @@
                                             yes: function (index, layero) {
                                                 // 支付成功 加上你的操作
                                                 axios.get('../order?op=addOrder',
-                                                        {
-                                                            //paramId: _this.cart.paramId,
-                                                            //pNumber: _this.cart.cNumber,
-                                                            uId: _this.cart.uId,
-                                                            //oPrice: _this.cart.price,
-                                                            aId : "address",
+                                                    {
+                                                        params:{
+                                                            paramId: _this.cart.param_id,
+                                                            pNumber: _this.cart.c_number,
+                                                            uId: _this.uId,
+                                                            oPrice: _this.cart.price,
+                                                            aId: 1,
                                                             totalPrice: _this.price,
                                                         }
+                                                    }
                                                 ).then(rs => {
                                                     if (rs.status == 200) {
                                                         axios.get('../cart?op=remove&cId=' + _this.cId).then((response) => {
@@ -240,6 +243,8 @@
                 }).then(response => {
                     if (response.status === 200) {
                         _this.cart = response.data.data;
+                        console.log(response.data.data);
+                        console.log(_this.cart);
                     }
                 }).catch(error => {
                     console.error(error);
@@ -250,6 +255,7 @@
         },
         mounted() {
             const _this = this;
+            _this.uId = localStorage.getItem('uId');
             _this.cId = localStorage.getItem("cId");
             _this.price = localStorage.getItem("totalPrice")
             alert(_this.cId);

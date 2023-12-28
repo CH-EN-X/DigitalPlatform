@@ -59,7 +59,8 @@
                c_id,
                color,
                memory_size,
-               pm.p_id pid
+               pm.p_id pid,
+                pm.param_id
         FROM prod_details pd
                  INNER JOIN parameter pm ON pd.p_id = pm.p_id
                  INNER JOIN shopping_cart s ON s.param_id = pm.param_id

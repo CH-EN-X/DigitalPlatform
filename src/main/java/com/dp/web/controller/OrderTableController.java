@@ -46,11 +46,20 @@ public class OrderTableController extends BaseController{
     }
 
     private void doAdd(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        OrderTable orderTable = parseRequest(req, OrderTable.class);
+        OrderTable orderTable = new OrderTable();
+        orderTable.setUId(Integer.valueOf(req.getParameter("uId")));
+        orderTable.setAId(Integer.valueOf(req.getParameter("aId")));
+        orderTable.setTotalPrice(Integer.valueOf(req.getParameter("totalPrice")));
+        //发货状态
+        orderTable.setOState(0);
+
         printToJson(resp,service.add(orderTable));
 
-        OrderDetails orderDetails = parseRequest(req,OrderDetails.class);
+        OrderDetails orderDetails = new OrderDetails();
         orderDetails.setOId(orderTable.getOId());
+        orderDetails.setParamId(Integer.valueOf(req.getParameter("paramId")));
+        orderDetails.setPNumber(Integer.valueOf(req.getParameter("pNumber")));
+        orderDetails.setOPrice(Integer.valueOf(req.getParameter("oPrice")));
         printToJson(resp,serviceDetails.add(orderDetails));
 
 
