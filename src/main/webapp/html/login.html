@@ -169,7 +169,7 @@
 				//session里存储   uId
 				$.get("../user",{op:"lg",uId:arr[0].uId},function (rs) {
 					localStorage.setItem("uId",arr[0].uId);
-
+					localStorage.setItem("headshotUrl",arr[0].pic);
 					if(rs > 0){
 
 						return rs;

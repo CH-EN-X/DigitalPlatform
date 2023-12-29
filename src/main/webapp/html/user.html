@@ -157,8 +157,20 @@
 <script>
     //Demo
     layui.use('form', function () {
+
+        // 头像
+        var headshotUrl = localStorage.getItem("headshotUrl");
+
+        // 将图片插入
+        layui.use('jquery', function(){
+            var $ = layui.jquery;
+            $('.avatar').html('<img src="' + headshotUrl + '" title="Chien_W"/>');
+        });
+
+         headshot:"../image/tx.jpg";
         var form = layui.form;
 //		var balanceValue = document.getElementById("balance").value;
+
 
 
         axios.get("../user?op=findById&id=1") //实现token后将id=1更换

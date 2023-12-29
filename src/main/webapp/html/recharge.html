@@ -71,7 +71,7 @@
 
     <aside class="sidebar">
         <div class="avatar">
-            <img src="../image/tx2.jpg" title="Chien_W"/>
+            <img :src="headshot" title="Chien_W"/>
         </div>
         <nav class="nav">
             <a href="user.html">个人信息</a>
@@ -100,10 +100,8 @@
             <span><br></span>
             <div style="background-color: #DCF0F7;width: 85%;line-height: 100px; margin-left: 4%;">
                 <div style="margin: 0 30px 0 30px;">
-                    <img src="../image/tx2.jpg" style="width: 80px;height: 80px;border-radius: 50%;overflow: hidden;"/>
+                    <img :src="headshot" style="width: 80px;height: 80px;border-radius: 50%;overflow: hidden;"/>
                     <span> 充值账号：{{uPhone}}</span>
-                    <!--                    <span>{{uId}}</span>-->
-                    <!--                    <span style="float: right;"></span>-->
                     <span name="balance" style="float: right;"> 账户余额：￥{{balance}}</span>
                 </div>
             </div>
@@ -174,6 +172,7 @@
     let app = new Vue({
         el: '#recharge',
         data: {
+            headshot:'',
             user: [],
             uPhone: 0,
             balance: 0,
@@ -344,6 +343,7 @@
         },
         mounted() {
             const _this = this;
+            _this.headshot = localStorage.getItem("headshotUrl");
             _this.loading();
         }
 

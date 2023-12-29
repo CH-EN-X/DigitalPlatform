@@ -26,6 +26,15 @@
         INNER JOIN order_details od ON o.o_id = od.o_id
         LEFT JOIN parameter p ON od.param_id = p.param_id
         LEFT JOIN prod_details pd ON pd.p_id = p.p_id
-        WHERE u_id = #{uId}
+        <where>
+            <if test="uId != null">
+                u_id = #{uId}
+            </if>
+            <if test="oState != null">
+                and o_state = #{oState}
+            </if>
+        </where>
     </select>
+
+
 </mapper>

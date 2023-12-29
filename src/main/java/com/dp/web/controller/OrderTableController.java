@@ -1,5 +1,6 @@
 package com.dp.web.controller;
 
+import com.alibaba.excel.EasyExcel;
 import com.dp.entity.OrderDetails;
 import com.dp.entity.OrderTable;
 import com.dp.entity.ShoppingCart;
@@ -46,33 +47,36 @@ public class OrderTableController extends BaseController{
     }
 
     private void doAdd(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        OrderTable orderTable = new OrderTable();
-        orderTable.setUId(Integer.valueOf(req.getParameter("uId")));
-        orderTable.setAId(Integer.valueOf(req.getParameter("aId")));
-        orderTable.setTotalPrice(Integer.valueOf(req.getParameter("totalPrice")));
+        OrderTable orderTable = parseRequest(req,OrderTable.class);
+        OrderDetails orderDetails = parseRequest(req,OrderDetails.class);
+
         //发货状态
         orderTable.setOState(0);
 
+       // 先插入OrderTable，获取自增的oId赋给
         printToJson(resp,service.add(orderTable));
-
-        OrderDetails orderDetails = new OrderDetails();
         orderDetails.setOId(orderTable.getOId());
-        orderDetails.setParamId(Integer.valueOf(req.getParameter("paramId")));
-        orderDetails.setPNumber(Integer.valueOf(req.getParameter("pNumber")));
-        orderDetails.setOPrice(Integer.valueOf(req.getParameter("oPrice")));
+        //再插入OrderDetails
         printToJson(resp,serviceDetails.add(orderDetails));
 
 
-//        Map<String,Object> list = parseRequest(req);
-//        System.out.println("list ======= " + list);
-//        OrderTable order = parseRequest(req,OrderTable.class);
-//        OrderDetails orderDetails = parseRequest(req,OrderDetails.class);
+        //        OrderTable orderTable = new OrderTable();
+//        orderTable.setUId(Integer.valueOf(req.getParameter("uId")));
+//        orderTable.setAId(Integer.valueOf(req.getParameter("aId")));
+//        orderTable.setTotalPrice(Integer.valueOf(req.getParameter("totalPrice")));
+        //发货状态
+//        orderTable.setOState(0);
+
+//        printToJson(resp,service.add(orderTable));
 //
-//        //先插入OrderTable，获取自增的oId赋给
-//        printToJson(resp,service.add(order));
-//        orderDetails.setOId(10);//orderDetails.setOId(order.getOId());
-//        //再插入OrderDetails
+//        OrderDetails orderDetails = new OrderDetails();
+//        orderDetails.setOId(orderTable.getOId());
+//        orderDetails.setParamId(Integer.valueOf(req.getParameter("paramId")));
+//        orderDetails.setPNumber(Integer.valueOf(req.getParameter("pNumber")));
+//        orderDetails.setOPrice(Integer.valueOf(req.getParameter("oPrice")));
 //        printToJson(resp,serviceDetails.add(orderDetails));
+
+
     }
 
     private void doFinds(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -83,4 +87,15 @@ public class OrderTableController extends BaseController{
 
         printToJson(resp,service.finds(order));
     }
+
+    /**
+     excel文件的下载
+     */
+    public void download(HttpServletResponse response) throws IOException {
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        response.setHeader("Content-disposition", "attachment;filename=demo.xlsx");
+        //EasyExcel.write(response.getOutputStream(), DownloadData.class).sheet("模板").doWrite(data());
+    }
+
 }
