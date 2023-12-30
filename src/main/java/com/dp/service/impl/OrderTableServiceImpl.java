@@ -1,7 +1,6 @@
 package com.dp.service.impl;
 
 import com.dp.entity.OrderTable;
-import com.dp.mapper.OrderDetailsMapper;
 import com.dp.mapper.OrderTableMapper;
 import com.dp.service.OrderTableService;
 import com.dp.util.MybatisPlusUtil;
@@ -10,9 +9,7 @@ import com.dp.vo.ResultVO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +18,7 @@ public class OrderTableServiceImpl implements OrderTableService {
 
     @Autowired
     private OrderTableMapper orderTableMapper;
+
 
 
     @Override
@@ -39,8 +37,8 @@ public class OrderTableServiceImpl implements OrderTableService {
         Date date = new Date();
         System.out.println("现在时间：" + formatter.format(date));
 
-        order.setRderTime(formatter.format(date));
-        order.setTotalTime(formatter.format(date));
+       // order.setRderTime(formatter.format(date));
+        //order.setTotalTime(formatter.format(date));
         orderTableMapper.insert(order);
         return new ResultVO(ResultEnum.SUCCESS);
     }
@@ -52,4 +50,16 @@ public class OrderTableServiceImpl implements OrderTableService {
         List<Map<String,Object>> list = orderTableMapper.selectList(order);
         return new ResultVO(ResultEnum.SUCCESS,list);
     }
+
+    //12.30 chen
+    @Override
+    public List<OrderTable> getOrderTable(OrderTable order) {
+        SqlSession session = MybatisPlusUtil.getSession();
+        orderTableMapper = session.getMapper(OrderTableMapper.class);
+        List<OrderTable> list = (List<OrderTable>) orderTableMapper.getOrderTables(2);
+        return list;
+    }
+
+
+
 }

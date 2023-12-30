@@ -19,6 +19,26 @@ public class ExcelData {
     private Date date;
     @ExcelProperty("数字标题")
     private Double doubleData;
+
+    private Integer oId;
+
+    private Integer aId;
+
+    private Integer uId;
+
+    private String rderTime;
+
+    private Object totalPrice;
+
+    private String totalTime;
+
+    private Integer oState;
+
+    private Integer paramId;
+
+    private Integer pNumber;
+
+    private Object oPrice;
     /**
      * 忽略这个字段
      */
