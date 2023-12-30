@@ -1,13 +1,17 @@
 package com.dp.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dp.entity.ShoppingCart;
 import com.dp.mapper.ShoppingCartMapper;
+import com.dp.mapper.UserMapper;
 import com.dp.service.IShoppingCartService;
 import com.dp.util.MybatisPlusUtil;
 import com.dp.util.MybatisUtil;
 import com.dp.util.ResultEnum;
 import com.dp.vo.ResultVO;
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
@@ -63,7 +67,9 @@ public class ShoppingCartServiceImpl implements IShoppingCartService {
         SqlSession session = MybatisUtil.getSession(true);
         mapper = session.getMapper(ShoppingCartMapper.class);
         List<Map<String, Object>> list = mapper.finds(uid);
+
         session.close();
+
 
         if(list == null || list.isEmpty()){
             return new ResultVO(ResultEnum.DATA_NULL);

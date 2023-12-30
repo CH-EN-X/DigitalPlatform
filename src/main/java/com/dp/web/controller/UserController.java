@@ -210,25 +210,25 @@ public class UserController  extends  BaseController{
 //        service.updateUserById(user);
 //    }
 
-        private void doFindById(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void doFindById(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-            //得到session
-            HttpSession session = req.getSession();
-            //取出用户名
-            int uId = Integer.parseInt((String)session.getAttribute("uId"));
-
-
-            User user = parseRequest(req,User.class);
-            //System.out.println("id ===="+req.getParameter("id"));
-            int id = uId;
-            User vo = service.getUserById(id); //TODO 登录时获取id token
-            //System.out.println("vo = " + vo);
-            printToJson(resp,vo);
+        //得到session
+        HttpSession session = req.getSession();
+        //取出用户名
+        int uId = Integer.parseInt((String)session.getAttribute("uId"));
 
 
+        User user = parseRequest(req,User.class);
+        //System.out.println("id ===="+req.getParameter("id"));
+        int id = uId;
+        User vo = service.getUserById(id);
+        //System.out.println("vo = " + vo);
+        printToJson(resp,vo);
 
 
-        }
+
+
+    }
 
 
 
