@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	 
+		<meta charset="UTF-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>管理员登录</title>
+		<link rel="shortcut icon" type="image/x-icon" href="../image/logo.png" />
+		<link rel="stylesheet"  type="text/css" href="../layui/css/layui.css" />
+		<link rel="stylesheet" type="text/css" href="../css/adminlogin.css" />
+		<link rel="stylesheet" type="text/css" href="../css/login.css" />
+	</head>
+	<body>
+		<div class="head">  
+			 <div class="head-img"><img src="../image/guanli01.png"/></div>
+			 <div class="head-login">
+				 <div class="login-tou"><img src="../image/logo.png"/></div>
+				 <div class="login-zhong">
+					 <div class="zhong-div">
+						 <form class="yc-login">
+						 	<ul class="login-ul">
+								
+								<li class="yc-tatl">
+									 管理员登录
+								</li>
+						 		
+						 		<li class="yc-tel">								 
+						 			<input type="text" name="mtel" id="atel" v-model="mtel" placeholder="请输入手机号" @blur="finds()" />
+						 		</li>
+
+						 		<li class="yc-pwd">
+						 			 
+						 			<input id="apwd" type="password" name="apwd"  v-model="mpwd" placeholder="请输入密码" />
+						 		</li>
+						 		 
+								<li>
+						 			<a id="adminlogin" class="yc-btn" href="javascript:void(0)" @click="reg">登录</a>
+						 		</li>
+						 		<li class="yc-tishi">
+						 			<input type="radio" checked="checked"/>
+						 			 我已阅读并同意<a href="#">《数码用户服务协议》</a><a href="#">《隐私政策》</a> 
+						 		</li>
+						 		
+						 		  
+						 		 
+						 	</ul>
+						 	
+						 </form>
+					 </div>
+				 </div>
+			 </div>
+			 
+			 
+			 
+			
+		</div>
+		
+		
+		
+		
+	</body>
+
+	<script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+	<script src="../layui/layui.js"></script>
+
+<script>
+
+
+	$("#adminlogin").click(function () {
+
+
+		let atel = $("#atel").val();
+		let apwd = $("#apwd").val();
+
+
+		$.ajax({
+
+			url:'../admin',
+			dataType:'json',
+
+			secureuri:false,
+			data:{
+				op:'adminlogin',atel:atel,apwd:apwd
+			},
+			success:function (rs) {
+				if(rs > 0){
+
+					// 弹出加载提示
+					var index = layer.load(1, {
+						shade: [0.5,'#000'] // 加载提示的样式
+					});
+
+					// 模拟1秒后加载完成
+					setTimeout(function(){
+						layer.close(index); // 关闭加载提示
+						// 这里是加载完成后要执行的代码
+						window.location.href = 'back/main.html';
+					}, 1000); // 1000毫秒 = 1秒
+
+
+				}
+				else{
+					alert('手机号或密码错误');
+				}
+
+			},
+			error:function (rs) {
+				alert('手机号或密码错误');
+
+			}
+
+
+		});
+
+
+	});
+
+
+</script>
+
+</html>

@@ -1,0 +1,332 @@
+.digital{
+	width: 100%;
+	background-color: gainsboro;
+}
+
+
+
+/* 头部 */
+.head{
+	width: 100%;
+	 
+}
+
+.head-x{
+	width: 100%;
+	height: 25px;
+	background-color: gainsboro;
+}
+.head-x-css{
+	display: inline-block;
+	margin-right: 10%;
+	float: right;
+	 
+}
+
+.head-s{
+	width: 100%;
+	height: 150px;
+	background-color: white;
+	border-bottom: 1px solid #efefef;
+}
+.head-s-css{
+	width: 80%;
+	height: 100%;
+	margin: 0 auto;
+	 
+ 
+}
+
+ .head-s-css li{
+	 float: left;
+ }
+ .css-logo{
+	 width: 20%;
+	 height: 100%;
+ }
+ .css-logo img{
+	 width: 100%;
+	 height: 80%;
+	 position: relative;
+	 top: 10%;
+ }
+ 
+ .css-text{
+	  
+	 width: 60%;
+	 height: 100%;
+ 
+ }
+ .text-ul1{
+	 width: 73%;
+	 height: 30px;
+	 position: relative;
+	 top: 20%;
+	 left: 10%;
+ }
+ .text-ul1 li{
+	 float: left;
+ }
+ .text {
+	 width: 90%;
+	 height: 30px;
+ }
+ .text-input{
+	 width: 100%;
+	 height: 30px;
+	 border: 2px solid orange;
+	 
+ }
+ .text-s{
+	 width: 9%;
+	 height: 30px;
+	 border: 2px solid orange;
+	 background-color: white;
+
+ }
+
+.text-s:hover{
+
+	background-color: orange;
+
+}
+ .text-s img{
+	 width: 70%;
+	  height: 25px;
+	 margin-left: 5px;
+	 margin-top: 2px;
+ }
+ 
+ .text-btn{
+	 width: 100%;
+	 height: 100%;
+
+ }
+
+
+
+.layui-tab-title{
+	width: 80%;
+	height: 50px;
+	position: relative;
+	top: 45%;
+	left: 10%;
+	border-bottom: 1px solid white;
+
+}
+.css-touxiang{
+	width: 8%;
+	height:100%;
+}
+.css-touxiang a:hover{
+	background-color: orange;
+}
+.css-touxiang a{
+	display:inline-block;
+	width: 100%;
+	height: 100%;
+
+}
+
+
+.css-touxiang a img{
+	margin-top: 30%;
+	width: 100%;
+	height: 40%;
+	border-radius: 50px;
+}
+.css-vehicle{
+	width: 11%;
+	height: 100%;
+	border-left: 1px solid gainsboro;
+}
+
+
+.vehicle-img{
+	width: 50%;
+	height: 50%;
+	margin: 0 auto;
+	margin-top: 15%;
+
+
+}
+
+.css-vehicle img{
+	width: 100%;
+	height: 100%;
+
+
+}
+.vehicle-text{
+	width: 80%;
+	height: 20px;
+	margin: 0 auto;
+
+	text-align: center;
+
+}
+
+
+.vehicle-text   span a:hover{
+	color: red;
+}
+
+
+
+
+/* 轮播图*/
+ 
+ .liebai{
+	 width: 90%;
+	 height: 460px;
+	 margin: 0 auto;
+	 background-color: white;
+
+ }
+ 
+ .pics{
+ 	 
+ 	width: 100%;
+ 	height: 460px;
+	 margin: 0 auto;
+
+
+ 
+ }
+.layui-carouse{
+	width: 90%;
+	height: 460px;
+}
+.pics-lun{
+	width: 90%;
+	height: 460px;
+}
+
+ 
+ .pics img{
+ 	width: 100%;
+ 	height: 460px;
+ }
+
+/*推荐*/
+.tuijian{
+	margin: 0 auto;
+
+
+	width: 90%;
+
+	background-color: white;
+
+}
+
+
+
+
+/* 主体    main*/
+ .main{
+	 margin: 0 auto;
+
+
+	 width: 90%;
+	 
+	 background-color: white;
+ }
+
+.layui-fluid{
+	 padding-top: 40px;
+	margin-top: 20px;
+}
+
+
+ .layui-elem-field{
+
+
+	margin-bottom: 40px;
+
+ }
+.layui-elem-field legend {
+	margin: 0 auto;
+}
+
+
+
+
+
+.article-text{
+
+	margin: 0 auto;
+	width: 80%;
+
+	margin-bottom: 10px;
+
+}
+.article-text:hover{
+
+	 background-color: gainsboro;
+}
+
+
+.ppics{
+
+	width: 100%;
+	height: 280px;
+
+}
+
+.article-text p{
+	text-align: center;
+	width: 80%;
+
+	line-height: 40px;
+	margin: 0 auto;
+
+}
+
+.price{
+	color: orange;
+}
+.price:hover{
+	color: orange;
+}
+ 
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ /* 尾部   footer */
+  
+ 
+ 
+/*footer*/
+.footer{
+	clear: both;/*清除浮动*/
+	width: 100%;
+	height: 150px;
+
+	margin-top: 10px;
+	background-color:  black;
+	padding-top: 40px;
+}
+.footer p{
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	color: white;
+}
+ 

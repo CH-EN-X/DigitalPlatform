@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dp.mapper.ShippingAddressMapper">
+
+    <insert id="addAddress" useGeneratedKeys="true" keyProperty="aId">
+        insert into shipping_address
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="obj != null">
+                <if test="obj.uId != null and obj.uId != &quot;&quot;">
+                    u_id,
+                </if>
+                <if test="obj.aName != null and obj.aName != &quot;&quot;">
+                    a_name,
+                </if>
+                <if test="obj.accieveName != null and obj.accieveName != &quot;&quot;">
+                    accieve_name,
+                </if>
+                <if test="obj.accievePhone != null and obj.accievePhone != &quot;&quot;">
+                    accieve_phone,
+                </if>
+                <if test="obj.status != null and obj.status != &quot;&quot;">
+                    status,
+                </if>
+                <if test="obj.temp != null and obj.temp != &quot;&quot;">
+                    temp,
+                </if>
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="obj != null">
+                <if test="obj.uId != null and obj.uId != &quot;&quot;">
+                    #{obj.uId},
+                </if>
+                <if test="obj.aName != null and obj.aName != &quot;&quot;">
+                    #{obj.aName},
+                </if>
+                <if test="obj.accieveName != null and obj.accieveName != &quot;&quot;">
+                    #{obj.accieveName},
+                </if>
+                <if test="obj.accievePhone != null and obj.accievePhone != &quot;&quot;">
+                    #{obj.accievePhone},
+                </if>
+                <if test="obj.status != null and obj.status != &quot;&quot;">
+                    #{obj.status},
+                </if>
+                <if test="obj.temp != null and obj.temp != &quot;&quot;">
+                    #{obj.temp},
+                </if>
+            </if>
+        </trim>
+    </insert>
+
+
+    <update id="UpdateAddress">
+        update shipping_address
+        <set>
+            <if test="obj != null">
+                <if test="obj.aName != null and obj.aName != &quot;&quot;">
+                    a_name = #{obj.aName},
+                </if>
+                <if test="obj.accieveName != null and obj.accieveName != &quot;&quot;">
+                    accieve_name = #{obj.accieveName},
+                </if>
+                <if test="obj.accievePhone != null and obj.accievePhone  != &quot;&quot;">
+                    accieve_phone = #{obj.accievePhone},
+                </if>
+                <if test="obj.status != null and obj.status != &quot;&quot;">
+                    status = #{obj.status},
+                </if>
+                <if test="obj.temp != null and obj.temp != &quot;&quot;">
+                    temp = #{obj.temp}
+                </if>
+            </if>
+        </set>
+        where a_id = #{obj.aId}
+    </update>
+
+    <update id="setAll">
+        update shipping_address set status = 0
+    </update>
+
+    <update id="set">
+        update shipping_address set status = 1 where a_id = #{obj.aId}
+    </update>
+
+    <delete id="delete">
+        delete from shipping_address where a_id = #{obj.aId}
+    </delete>
+
+    <select id="FindAll" resultType="com.dp.entity.ShippingAddress">
+        select * from shipping_address
+        <where>
+            <if test="obj != null">
+                <if test="obj.aId != null and obj.aId != &quot;&quot;">
+                    and a_id = #{obj.aId}
+                </if>
+                <if test="obj.uId != null and obj.uId != &quot;&quot;">
+                    and u_id = #{obj.uId}
+                </if>
+                <if test="obj.status != null and obj.status != &quot;&quot;">
+                    and status = #{obj.status}
+                </if>
+            </if>
+        </where>
+    </select>
+</mapper>

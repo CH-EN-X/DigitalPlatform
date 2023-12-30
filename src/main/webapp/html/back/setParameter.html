@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>添加商品参数信息</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../layui/css/layui.css" tppabs="//res.ilayuis.com/layui/dist/css/layui.css"
+          media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+
+<!-- <blockquote class="layui-elem-quote layui-text">
+  鉴于小伙伴的普遍反馈，先温馨提醒两个常见“问题”：1. <a href="../doc/base/faq.html#form" tppabs="http://www.ilayuis.com/doc/base/faq.html#form" target="_blank">为什么select/checkbox/radio没显示？</a> 2. <a href="../doc/modules/form.html#render" tppabs="http://www.ilayuis.com/doc/modules/form.html#render" target="_blank">动态添加的表单元素如何更新？</a>
+</blockquote> -->
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>添加商品参数信息</legend>
+</fieldset>
+
+<form class="layui-form" action="" id="form_film" method="post" enctype="m ultipart/form-data">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">商品名称</label>
+        <div class="layui-input-block">
+            <select name="interest" lay-filter="interestSelect">
+                <option value=""></option>
+                <option :value="n.pId" v-for="n in PNames" >{{n.pName}}</option>
+            </select>
+        </div>
+    </div>
+
+
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">存储大小</label>
+        <div class="layui-input-block">
+            <input type="text" name="memorySize" id="memorySize" lay-verify="title" autocomplete="off" placeholder="请输入商品存储大小"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">颜色</label>
+        <div class="layui-input-block">
+            <input type="text" name="color" id="color" lay-verify="title" autocomplete="off" placeholder="请输入商品颜色"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">价格</label>
+            <div class="layui-input-inline">
+                <input type="number" name="price" id="price" lay-verify="required|price" autocomplete="off"
+                       class="layui-input">
+            </div>
+            <label class="layui-form-label" style="padding-left: 0;text-align: left;">元</label>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">商品图片</label>
+        <div class="layui-upload">
+            <!--<button type="button" class="layui-btn" id="test2">多图片上传</button>
+            <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;margin-left: 110px;">
+                预览图：
+                <div class="layui-upload-list" id="demo2"></div>
+            </blockquote>-->
+            <input type="file" id="paramImage" name="paramImage" multiple="multiple"
+                   onchange="setImagePreviews(this,'showpic')">
+        </div>
+
+    </div>
+    <div class="layui-form-item" style="margin-left: 20px" id="showpic"></div>
+
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" id="test9" class="layui-btn" lay-submit="" lay-filter="demo1">立即添加</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+
+<script src="../../js/showpic.js" ></script>
+<script type="text/javascript"  src="../../js/jquery-3.4.1.min.js" ></script>
+<script src="../../layui/layui.js" charset="utf-8"></script>
+<script src="../../js/ajaxfileupload.js" ></script>
+<script src="../../js/vue.js" ></script>
+<script src="../../js/axios.js" ></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+<script>
+
+    var v = new Vue({
+        el:'#form_film',
+        data: {
+            PNames: [],
+            pId:0
+        },
+        methods: {
+
+        },
+        mounted: function (){
+            axios.get('../../prodDetails?op=FindAll').then(rs => {
+                if(rs.status == 200){
+                    this.PNames = rs.data.data;
+                }
+            });
+        },
+        updated() {
+            this.$nextTick(function () {
+                layui.form.render('select'); // Update LayUI form
+            })
+        }
+
+    });
+
+    //获取pId
+    layui.use('form', function(){
+        var form = layui.form;
+
+        // 监听select选择事件
+        form.on('select(interestSelect)', function(data){
+            v.pId = data.value;
+        });
+    });
+
+
+    layui.use(['upload', 'element', 'layer', 'form'], function () {
+        let upload = layui.upload
+            , element = layui.element
+            , layer = layui.layer
+            , form = layui.form;
+
+        $("#test9").click(function (){
+
+            let memorySize = $("#form_film input[name='memorySize']").val();
+            let color = $("#form_film input[name='color']").val();
+            let price = $("#form_film input[name='price']").val();
+
+            //自定义验证规则
+            if(v.pId < 0){
+                layer.alert('请选择商品');
+                return;
+            }
+
+            let isTitleValid = memorySize.length >= 2;
+            if(!isTitleValid){
+                layer.alert('请输入商品存储大小');
+                return;
+            }
+
+            isTitleValid = color.length >= 2;
+            if(!isTitleValid){
+                layer.alert('请输入商品颜色');
+                return;
+            }
+
+            let isPriceValid = price > 0;
+            if(!isPriceValid){
+                layer.alert('价格必须大于0');
+                return;
+            }
+
+
+
+
+
+            $.ajaxFileUpload({
+                url:'../../parameter',
+                dataType:'json',
+                fileElementId: 'paramImage',
+                secureuri:false,
+                data: {
+                    color:color,
+                    memorySize:memorySize,
+                    price:price,
+                    pId:v.pId
+                },
+                success: function (rs){
+                    layer.alert(rs.msg);
+                },
+                error: function(rs){
+                    alert('添加失败');
+                }
+            });
+
+        });
+
+
+
+    });
+
+
+
+
+
+</script>
+</body>
+</html>

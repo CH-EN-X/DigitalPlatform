@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>数码首页</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="../image/logo.png"/>
+    <link rel="stylesheet" type="text/css" href="../layui/css/layui.css"/>
+    <link rel="stylesheet " type="text/css" href="../css/index.css"/>
+
+
+    <style>
+        .hidden {
+            display: none; /* 设置元素隐藏 */
+        }
+    </style>
+
+</head>
+<body>
+<div class="digital">
+    <!-- 头部 -->
+    <div class="head">
+        <div class="head-x ">
+            <div class="head-x-css">
+						<span class="layui-breadcrumb" lay-separator="|">
+						  <a id="login_state" href="login.html">您好，请登录</a>
+						  <a href="register.html">免费注册</a>
+						  <a href="#">帮助中心</a>
+						  <a href="#">客服</a>
+						   
+						</span>
+
+            </div>
+        </div>
+        <!-- 搜索框 -->
+        <div class="head-s">
+            <ul class="head-s-css">
+
+                <li class="css-logo"><img src="../image/logo.png"/></li>
+                <li class="css-text">
+                    <ul class="text-ul1">
+                        <li class="text"><input id="content" type="text" name="title" placeholder=" 请输入搜索内容"
+                                                class="text-input"/></li>
+                        <li class="text-s"><a id="select" class="text-btn" href="javascript:void(0)"><img
+                                src="../image/搜索.png"/></a></li>
+
+                    </ul>
+
+
+                    <ul class="layui-tab-title">
+                        <li class="layui-this"><a href="index.html"> 首页</a></li>
+                        <li><a href="type.html#手机款式 "> 手机款式</a></li>
+                        <li><a href="type.html#电脑整机"> 电脑整机</a></li>
+                        <li><a href="type.html#家电类型"> 家电类型</a></li>
+                        <li><a href="type.html#影音娱乐"> 影音娱乐</a></li>
+                        <li><a href="type.html#摄影摄像"> 摄影摄像</a></li>
+                    </ul>
+                </li>
+
+                <!--头像-->
+                <li class="css-touxiang"><a href="#"> <img id="touxiang" src="../image/logo.png"/></a></li>
+
+                <!-- 购物车 -->
+                <li class="css-vehicle">
+                    <div class="vehicle-img"><a href="ShoppingCart.html"> <img src="../image/购物车.png"/> </a></div>
+                    <div class="vehicle-text"><span><a href="ShoppingCart.html">   我的购物车    </a></span></div>
+                </li>
+
+
+            </ul>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- 轮播图 pics start -->
+    <div id="myDiv" class="liebai">
+        <div class="pics">
+            <div class="layui-carousel" id="test1">
+                <div carousel-item class="pics-lun">
+                    <div><img src="../image/tu01.png"></div>
+                    <div><img src="../image/tu02.png"/></div>
+                    <div><img src="../image/tu03.png"/></div>
+                    <div><img src="../image/tu04.png"/></div>
+                    <div><img src="../image/lunbo02.png"/></div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <!--推荐-->
+    <div class="tuijian">
+        <div class="layui-fluid">
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>每日推荐</legend>
+            </fieldset>
+            <div class="layui-row" id="recommend">
+                <div class="layui-col-md3">
+                    <div class="grid-demo ">
+                        <div class="article-text">
+                            <a href="#"><img class="ppics" src="../image/lunbo02.png"/></a>
+                            <p class="fname">中国减贫</p>
+                            <p class="score">9.0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <!-- 主体 -->
+    <div class="main">
+        <div class="layui-fluid">
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>猜你喜欢</legend>
+            </fieldset>
+            <div class="layui-row" id="yc-movies">
+                <div class="layui-col-md3">
+                    <div class="grid-demo  ">
+                        <div class="article-text"><a href=" ProdDetail.html#1"><img class="ppics"
+                                                                                    src="../image/pms_1691494291.57494192.png"/></a><a
+                                href=" ProdDetail.html#1"><p class="name">Redmi 12 5G</p></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <!--分页标签-->
+    <div id="demo7"></div>
+</div>
+
+
+<!-- 尾部 -->
+<div class="footer">
+
+    <p>商务合作邮箱：v@maoyan.com 客服电话：10105335
+        违法和不良信息/涉未成年人有害信息举报电话：4006018900</p>
+
+    <p>用户举报/涉未成年人有害信息举报邮箱：tousujubao@meituan.com
+        舞弊线索举报邮箱：wubijubao@maoyan.com</p>
+
+    <p>中华人民共和国增值电信业务经营许可证 京B2-20190350 营业性演出许可证
+        京演（机构）（2019）4094号 </p>
+</div>
+
+</div>
+</body>
+
+<script src="../layui/layui.js"></script>
+<script>
+
+
+    layui.use('carousel', function () {
+        var carousel = layui.carousel
+            , laypage = layui.laypage
+            , $ = layui.jquery;
+        //建造实例
+        carousel.render({
+            elem: '#test1'
+            , width: '100%' //设置容器宽度
+            , height: '100%'
+            , arrow: 'always' //始终显示箭头
+            //,anim: 'updown' //切换动画方式
+        });
+
+        let limit = 24;
+        let count = 0;
+        let flag = false;//表示是否为第一次查询商品数据
+
+        //检测是否登录
+        lg();
+        //显示商品信息
+        finds(1, limit);
+
+        displayselect();
+
+        /*推荐*/
+        recommend();
+
+
+        function recommend() {
+            $.get("../prodDetails", {op: "recommend"}, function (rs) {
+                if (rs.code == 200) {
+                    showRecommend(rs.data);
+                    count = rs.count;
+
+                } else {
+                    layer.msg(rs.msg);
+                    $("#recommend").html('');
+                }
+            }, "json");
+
+        }
+
+
+        function showRecommend(arr) {
+
+
+            let str = '';
+            for (let i = 0; i < arr.length; i++) {
+                str += '<div class="layui-col-md3">' +
+                    '<div class="grid-demo  ">' +
+                    '<div class="article-text" >' +
+                    '<a href=" ProdDetail.html#' + arr[i].pId + '"><img class="ppics" src="' + arr[i].pImage + '"/></a>' +
+                    '<a href=" ProdDetail.html#' + arr[i].pId + '"><p class="name">' + arr[i].pName + '</p></a>' +
+
+                    '</div>' +
+                    '</div>' +
+                    '</div>'
+
+            }
+            $("#recommend").html(str);
+
+
+        }
+
+
+        function finds(curr, limit) {
+            $.get("../prodDetails", {op: "finds", page: curr, limit: limit}, function (rs) {
+                if (rs.code == 200) {
+                    showMovies(rs.data);
+                    count = rs.count;
+                    //首次访问 显示分页组件
+                    if (flag == false) {
+                        showPage();
+                    }
+                    flag = true;
+                } else {
+                    layer.msg(rs.msg);
+                    $("#yc-movies").html('');
+                }
+            }, "json");
+
+        }
+
+
+        //检测是否登录
+        function lg() {
+
+
+            //session里存储   uId
+            $.get("../user", {op: "determine"}, function (rs) {
+
+                if (rs != null) {
+
+                    $("#login_state").text("在线！"); // 修改文本
+
+                }
+
+            }, "json");
+
+
+        }
+
+
+        function showMovies(arr) {
+
+
+            let str = '';
+            for(let i=0;i<arr.length;i++){
+                str += '<div class="layui-col-md3">'+
+                            '<div class="grid-demo  ">' +
+                                '<div class="article-text" >'+
+                                    '<a href=" ProdDetail.html#'+arr[i].pId+'"><img class="ppics" src="'+ arr[i].pImage +'"/></a>'+
+                                    '<a href=" ProdDetail.html#'+arr[i].pId+'"><p class="name">'+arr[i].pName+'</p></a>'+
+
+                                '</div>'+
+                            '</div>'+
+                        '</div>'
+
+            }
+            console.log("addDetail")
+            console.log(str)
+            $("#yc-movies").html(str);
+
+
+        }
+
+        //分页
+        function showPage() {
+            //完整功能
+            laypage.render({
+                elem: 'demo7'
+                , count: count
+                , limit: limit
+                , limits: [10, 15, 20, 25, 30]
+                , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+                , jump: function (obj) {
+                    if (flag == true) { //不是第一次查询电影数据  调用finds()
+                        finds(obj.curr, obj.limit);
+                    }
+                }
+            });
+
+
+        }
+
+
+        $("#select").click(function () {
+
+            let pName = $("#content").val();
+            if (pName != null && "" != pName) {
+
+                display(pName);
+
+            } else {
+                window.location.href = 'index.html';
+            }
+
+
+        });
+
+
+        //显示搜索信息
+        function display(pName) {
+            $.get("../prodDetails", {op: "select", pName: pName}, function (rs) {
+                if (rs.code == 200) {
+                    console.log(rs.data);
+                    if (rs.data != null) {
+
+                        // 隐藏元素
+                        $("#myDiv").addClass("hidden");
+                        $("#demo7").addClass("hidden");
+
+                        showMovies(rs.data);
+
+
+                        /*window.location.href = 'type.html';*/
+                    }
+                }
+                if (rs.code == 600) {
+                    layer.msg(rs.msg);
+
+                }
+
+            }, "json");
+
+        }
+
+
+        //判断其他页面搜索  并显示
+        function displayselect() {
+            $.get("../prodDetails", {op: "napName"}, function (rs) {
+
+
+                if (rs != null) {
+
+
+                    $.get("../prodDetails", {op: "select", pName: rs}, function (rs) {
+                        if (rs.code == 200) {
+                            console.log(rs.data);
+                            if (rs.data != null) {
+
+                                // 隐藏元素
+                                $("#myDiv").addClass("hidden");
+                                $("#demo7").addClass("hidden");
+
+                                showMovies(rs.data);
+
+
+                                /*window.location.href = 'type.html';*/
+                            }
+                        }
+
+
+                    }, "json");
+                }
+
+            });
+
+
+        }
+
+
+        //跳转用户个人信息页面
+        $("#touxiang").click(function () {
+
+            window.location.href = 'personal.html';
+
+        });
+
+
+    });
+
+
+</script>
+
+</html>

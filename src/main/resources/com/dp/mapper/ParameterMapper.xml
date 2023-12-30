@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dp.mapper.ParameterMapper">
+
+    <select id="FindByPid" resultType="com.dp.entity.Parameter">
+        select param_id, memory_size, color, param_image, price
+        from parameter pm
+                 inner join prod_Details pd
+                            on pm.p_id = pd.p_id where pm.p_id = #{pid}
+    </select>
+
+    <select id="FindPrice" resultType="com.dp.entity.Parameter">
+        select price from parameter where memory_size = #{memorySize}
+    </select>
+
+    <select id="find" resultType="com.dp.entity.Parameter">
+        select param_id from PARAMETER where color = #{obj.color} and memory_size = #{obj.memorySize}
+    </select>
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="paramId">
+        insert into parameter(p_id, color, memory_size, price, param_image)
+        values (#{obj.pId}, #{obj.color}, #{obj.memorySize}, #{obj.price}, #{obj.paramImage})
+    </insert>
+
+
+    <update id="BackUpdatePrice">
+        update parameter set price = #{obj.price} where param_id = #{obj.paramId}
+    </update>
+
+    <delete id="BackDelete">
+        delete from parameter where param_id = #{obj.paramId}
+    </delete>
+
+
+
+    <select id="FindPage" resultType="java.util.Map">
+        select param_id, p_name, color, memory_size, price
+        from prod_details pd
+        inner join parameter pt on pd.p_id = pt.p_id
+        <where>
+            <if test="obj != null">
+                <if test="obj.paramId != null and obj.paramId != &quot;&quot;">
+                    and param_id = #{obj.paramId}
+                </if>
+                <if test="obj.color != null and obj.color != &quot;&quot;">
+                    and color = #{obj.color}
+                </if>
+                <if test="obj.memorySize != null and obj.memorySize != &quot;&quot;">
+                    and memory_size = #{obj.memorySize}
+                </if>
+                <if test="obj.price != null and obj.price != &quot;&quot;">
+                    and price = #{obj.price}
+                </if>
+            </if>
+        </where>
+        <if test="page != null and limit != null">
+            LIMIT #{page}, #{limit}
+        </if>
+    </select>
+
+    <select id="total" resultType="java.lang.Integer">
+        select count(*)
+        from prod_details pd
+        inner join parameter pt on pd.p_id = pt.p_id
+        <where>
+            <if test="obj != null">
+                <if test="obj.paramId != null and obj.paramId != &quot;&quot;">
+                    and param_id = #{obj.paramId}
+                </if>
+                <if test="obj.color != null and obj.color != &quot;&quot;">
+                    and color = #{obj.color}
+                </if>
+                <if test="obj.memorySize != null and obj.memorySize != &quot;&quot;">
+                    and memory_size = #{obj.memorySize}
+                </if>
+                <if test="obj.price != null and obj.price != &quot;&quot;">
+                    and price = #{obj.price}
+                </if>
+            </if>
+        </where>
+    </select>
+
+
+
+</mapper>

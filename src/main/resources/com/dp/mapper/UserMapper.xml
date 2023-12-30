@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dp.mapper.UserMapper">
+
+
+    <!--int addUser( User user);-->  <!--  resultType：表示这条SQL返回的结果类型-->
+    <!--parameterType: 参数类型,--> <!--useGeneratedKeys: 是否回填自动生成的主键-->
+    <insert id="addUser"  useGeneratedKeys="true" keyProperty="uId" databaseId="mysql">
+        insert into user (u_pwd,u_phone,balance,reg_time) values(#{uPwd},#{uPhone},0,now())
+    </insert>
+
+  <!--  List<User> Login(Map<String,Object>);-->
+    <select id="Login" resultType="user">
+        select * from user
+        <where>
+            <if test="uPhone!=null  and uPwd!=null">
+                and u_phone = #{uPhone} and u_pwd = #{uPwd}
+            </if>
+
+
+        </where>
+
+    </select>
+
+
+
+
+
+
+    <!-- public List<User> finds(Map<String,Object> map);-->
+
+    <select id="finds" resultType="User">
+        select  u_id,u_name,u_phone,balance,reg_time  from user
+        <where>
+            <if test="uId!=null">
+                and u_id = #{uId}
+            </if>
+
+
+        </where>
+
+        <if test="page!=null  and limit !=null">
+            <bind name="_page" value="(_parameter.page-1)*_parameter.limit"/>
+            limit #{_page},#{limit}
+        </if>
+
+    </select>
+
+
+
+
+
+
+
+    <!--  int total(Map<String,Object> map);-->
+
+
+    <select id="total" resultType="int">
+        select count(*) from  user
+        <where>
+            <if test="uId!=null">
+                and u_id = #{uId}
+            </if>
+
+
+        </where>
+
+    </select>
+
+
+
+
+    <!-- int shanchu(Map<String ,Object> map);-->
+    <delete id="shanchu">
+        delete
+        from user
+        where u_id = #{uId}
+    </delete>
+
+
+
+
+
+
+
+</mapper>

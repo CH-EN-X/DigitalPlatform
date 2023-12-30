@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dp.mapper.AdminMapper">
+
+
+
+
+    <!--int adminlogin(Map<String ,Object> map);-->
+    <select id="adminlogin" resultType="int">
+        select ano,aname,atel,role from admin
+        <where>
+            <if test="atel!=null  and atel!=null">
+                and atel = #{atel} and apwd = #{apwd}
+            </if>
+
+
+        </where>
+
+
+
+    </select>
+
+
+
+
+    <!--   Integer add(Admin admin);-->
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="ano">
+        insert into admin(ano, aname, apwd, atel, role)
+        values (#{obj.ano}, #{obj.aname}, RIGHT(#{obj.atel},6), #{obj.atel}, #{obj.role})
+    </insert>
+
+
+
+
+   <!-- public List<Admin> findPage(Map<String,Object> map);-->
+
+    <select id="findPage" resultType="Admin">
+        select ano,aname,atel,role from admin
+        <where>
+            <if test="ano!=null">
+                and ano = #{ano}
+            </if>
+
+
+        </where>
+
+        <if test="page!=null  and limit !=null">
+            <bind name="_page" value="(_parameter.page-1)*_parameter.limit"/>
+            limit #{_page},#{limit}
+        </if>
+
+    </select>
+
+
+
+
+
+
+
+    <!--  int total(Map<String,Object> map);-->
+
+
+    <select id="total" resultType="int">
+        select count(*) from  admin
+        <where>
+            <if test="ano!=null">
+                and ano = #{ano}
+            </if>
+
+
+
+
+        </where>
+
+    </select>
+
+
+
+
+
+   <!-- int shanchu(Map<String ,Object> map);-->
+    <delete id="shanchu">
+        delete
+        from admin
+        where ano = #{ano}
+    </delete>
+
+
+
+</mapper>

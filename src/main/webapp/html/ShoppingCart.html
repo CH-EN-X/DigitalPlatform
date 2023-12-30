@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>数码购物车</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="../image/logo.png"/>
+    <link rel="stylesheet" type="text/css" href="../layui/css/layui.css"/>
+
+    <link rel="stylesheet" type="text/css" href="../css/ShoppingCart.css"/>
+</head>
+<body>
+<div class="digital">
+    <!-- 头部 -->
+    <div class="head">
+        <div class="head-x ">
+            <div class="head-x-css">
+						<span class="layui-breadcrumb" lay-separator="|">
+						   <a id="login_state" href="login.html">您好，请登录</a>
+						  <a href="register.html">免费注册</a>
+						  <a href="#">帮助中心</a>
+						  <a href="#">客服</a>
+						   
+						</span>
+
+            </div>
+        </div>
+        <!-- 搜索框 -->
+        <div class="head-s">
+            <ul class="head-s-css">
+
+                <li class="css-logo"><img src="../image/logo.png"/></li>
+                <li class="css-text">
+                    <ul class="text-ul1">
+                        <li class="text"><input  id="content" type="text" name="title"   placeholder=" 请输入搜索内容"  class="text-input"/> </li>
+                        <li class="text-s">  <a  id="select"  class="text-btn" href="javascript:void(0)"  ><img src="../image/搜索.png"/></a>  </li>
+
+
+                    </ul>
+
+                    <ul class="layui-tab-title">
+                        <li class="layui-this"><a href="index.html"> 首页</a></li>
+                        <li><a  href="type.html#电脑整机"  id="typename01" > 手机款式</a></li>
+                        <li><a    href="type.html#电脑整机" id="typename02"> 电脑整机</a></li>
+                        <li><a    href="type.html#平板类型" id="typename03"> 平板类型</a></li>
+                        <li><a    href="type.html#影音娱乐" id="typename04"> 影音娱乐</a></li>
+                        <li><a    href="type.html#摄影摄像" id="typename05"> 摄影摄像</a></li>
+                    </ul>
+                </li>
+                <!--头像-->
+                <li class="css-touxiang"><a href="#"> <img id="touxiang" src="../image/logo.png"/></a></li>
+
+                <!-- 购物车 -->
+                <li class="css-vehicle">
+                    <div class="vehicle-img"><a href="#"> <img src="../image/购物车.png"/> </a></div>
+                    <div  class="vehicle-text"> <span><a href="ShoppingCart.html">   我的购物车    </a></span></div>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+    </div>
+
+    <!-- 主体 -->
+    <div class="main" id="cart">
+        <div class="cart-wrap">
+            <div class="cart-goods-list">
+                <div class="list-head">
+                    <div class="col-check" style="display: flex;justify-content: center;align-items: center">
+                        <input type="checkbox" id="customCheckbox" class="checkbox" @change="getTotal($event,prods)" />
+                        <label for="customCheckbox" class="checkbox-label"></label>&nbsp;&nbsp;全选
+                    </div>
+                    <div class="col-pic"></div>
+                    <div class="col-name">商品名字</div>
+                    <div class="col-price">单价</div>
+                    <div class="col-num">数量</div>
+                    <div class="col-total">小计</div>
+                    <div class="col-action">操作</div>
+                </div>
+                <div class="list-body" v-for="(p,index) in prods" :key="index">
+
+                    <div class="col col-check" style="display: flex;justify-content: center;align-items: center">
+                        <input type="checkbox" :id="'checkbox'+index" class="checkbox" @change="getOneGood($event,p.c_id)"/>
+                        <label :for="'checkbox'+index" class="checkbox-label"></label>&nbsp;选中
+                    </div>
+                    <div class="col col-pic"><a href="javascript:void(0)" @click="getDetail(p.pid)"><img :src="p.param_image"></a></div>
+                    <div class="col col-name" style="font-size: 18px;"><a href="javascript:void(0)" @click="getDetail(p.pid)">{{p.p_name}}</a>
+                    </div>
+                    <div class="col col-price">{{p.price}}元</div>
+                    <div class="col col-num">
+                        <div class="col-num-d">
+                            <div class="col-num-reduce"><a href="javascript:void(0)" @click="reduce(p.c_id,p.c_number)">-</a></div>
+                            <div class="col-num-num">{{p.c_number}}</div>
+                            <div class="col-num-add"><a href="javascript:void(0)" @click="increase(p.c_id)">+</a></div>
+                        </div>
+                    </div>
+                    <div class="col col-total" style="color:#ff6700;">{{p.c_number*p.price}}</div>
+                    <div class="col col-action"><a href="javascript:void(0)" @click="remove(this,p.c_id)">X</a></div>
+                    <div class="col-parameter">{{p.color}}&nbsp;&nbsp;{{p.memory_size}}</div>
+
+                </div>
+            </div>
+            <div class="cart-pay">
+                <div class="cart-col-resume"><a href="javascript:void(0)">继续购物</a></div>
+                <div class="cart-col-selected">已选择<a style="color: #ff6700;">{{num}}</a>件</div>
+                <div class="cart-col-total" style="color: #ff6700;">合计：<a style="font-size: 20px;color: #ff6700;">{{total}}元</a></div>
+                <div class="cart-col-pay"><a href="javascript:void(0)"  @click="pay" style="font-size: 20px;color: white" >去结算</a></div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- 尾部 -->
+    <div class="footer">
+
+    </div>
+</div>
+</body>
+
+<script src="../layui/layui.js"></script>
+<script src="../layui/css/layui.css"></script>
+<script src="../js/jquery-3.4.1.min.js"></script>
+<script src="../js/vue.js"></script>
+<script src="../js/axios.js"></script>
+
+<script>
+
+    let uId;
+
+
+
+
+
+
+
+    let v = new Vue({
+        el: '#cart',
+        data: {
+            prods: [],
+            total: 0,
+            num:0,
+            cId: 0,
+        },
+        methods: {
+            increase: function (cid){
+
+                axios.get('../cart?op=increase&cId='+ cid).then(rs =>{
+                    if(rs.status == 200){
+
+                        axios.get('../cart?op=finds&uId='+uId).then(rs => {
+                            if (rs.status == 200) {
+                                this.prods = rs.data.data;
+                            }
+                        });
+                    }
+                });
+            },
+
+
+            reduce: function (cid,num){
+                if(num <= 1){
+                    layui.use('layer', function() { //独立版的layer无需执行这一句
+                        var  layer = layui.layer; //独立版的layer无需执行这一句
+                        layer.alert("修改数量不能小于0");
+                    });
+                    return ;
+                }
+                axios.get('../cart?op=reduce&cId='+ cid).then(rs =>{
+                    if(rs.status == 200){
+                        axios.get('../cart?op=finds&uId=' + uId).then(rs => {
+                            if (rs.status == 200) {
+                                this.prods = rs.data.data;
+                            }
+                        });
+                    }
+                });
+            },
+
+            remove: function (obj,cid){
+                layui.use('layer', function() { //独立版的layer无需执行这一句
+                    var  layer = layui.layer; //独立版的layer无需执行这一句
+                    //Confirm
+                    layer.confirm('确认删除所选的商品吗？', {
+                        btn: ['确认','取消'] //按钮
+                    }, function(){
+                        layer.closeAll(); // 关闭所有弹出层
+
+                        axios.get('../cart?op=remove&cId='+cid).then(rs =>{
+                            if(rs.status == 200){
+                                $(obj).remove();
+                                axios.get('../cart?op=finds&uId=' + uId).then(rs => {
+                                    if (rs.status == 200) {
+                                        this.prods = rs.data.data;
+                                    }
+                                });
+                                window.location.reload();
+                            }
+                        });
+
+                    }, function(){
+
+                    });
+                });
+            },
+
+
+            getOneGood: function (event,cId){
+                if (event.target.checked) {
+                    // checkbox被选中，执行相应操作
+
+                    // chen
+                    let _this = this;
+                    _this.cId= cId;
+
+
+                    axios.get('../cart?op=selected&cId=' + cId)
+                        .then(response => {
+                            if (response.status === 200) {
+                                this.total += response.data.data.price;
+                                this.num += 1;
+                            }
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
+                }else{
+                    axios.get('../cart?op=selected&cId=' + cId)
+                        .then(response => {
+                            if (response.status === 200) {
+                                this.total -= response.data.data.price;
+                                this.num -= 1;
+                            }
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
+                }
+
+            },
+
+            getTotal: function (event,prods){
+                if(event.target.checked){
+                    // 创建一个空数组来保存所有的异步请求
+                    let requests = [];
+
+                    for(let i=0; i<prods.length;i++){
+                        // 把每个异步请求添加到数组中
+                        requests.push(axios.get('../cart?op=selected&cId=' + prods[i].c_id));
+                    }
+
+                    // 当所有请求都完成后
+                    Promise.all(requests).then(results => {
+                        this.total = 0;
+                        this.num = 0;
+
+                        results.forEach(response => {
+                            if (response.status === 200) {
+                                this.total += response.data.data.price;
+                                // console.log(response.data);
+                                this.num += 1;
+                            }
+                        });
+
+                        // 获取所有的复选框并设为选中状态
+                        let checkboxes = document.querySelectorAll('input[type=checkbox]');
+                        for (let i = 0; i < checkboxes.length; i++) {
+                            checkboxes[i].checked = true;
+                        }
+
+                    }).catch(error => {
+                        console.error(error);
+                    });
+
+                }else{
+                    let checkboxes = document.querySelectorAll('input[type=checkbox]');
+                    for (let i = 0; i < checkboxes.length; i++) {
+                        checkboxes[i].checked = false;
+                    }
+                    this.total = 0;
+                    this.num = 0;
+                }
+            },
+
+            pay(){
+                const _this = this;
+                if(_this.total > 0){
+
+                    localStorage.setItem("totalPrice",_this.total);//使用键为 "totalPrice" 将总价存储在浏览器的 localStorage 中。
+                    localStorage.setItem("cId",_this.cId);
+                    localStorage.setItem("code",'200');
+                    window.location.href = 'pay.html';//重定向
+
+                }else{
+                    alert("请勾选要结账的商品");
+                }
+
+            },
+
+            getDetail(pid){
+                localStorage.setItem("pid",pid);
+                window.location.href = 'ProdDetail.html';
+            }
+
+        },
+        mounted: function () {
+
+
+                lg();
+                //检测是否登录
+                function lg() {
+
+                    //session里存储   uId
+                    $.get("../user",{op:"determine" },function (rs) {
+
+                        if(rs !=null){
+
+                            $("#login_state").text("在线！"); // 修改文本
+                            uId = rs;
+
+                            axios.get('../cart?op=finds&uId=' + uId).then(rs => {
+                                if (rs.status == 200) {
+                                    v.prods = rs.data.data;
+                                }
+                            });
+
+                        }
+
+                    },"json");
+
+
+                }
+
+                $("#select").click(function () {
+
+                    let pName = $("#content").val();
+                    if( pName!=null && ""!=pName){
+
+                        //session里存储   pName
+                        $.get("../prodDetails",{op:"cpName",pName:pName },function (rs) {
+
+                            if(rs!=null){
+                                window.location.href = 'index.html';
+                            }
+
+                        },"json");
+
+                    }
+                    else{
+
+                        alert('暂无相关商品！！！');
+                    }
+
+
+                });
+
+
+                //跳转用户个人信息页面
+                $("#touxiang").click(function () {
+
+                    window.location.href = 'personal.html';
+
+                });
+
+
+
+        }
+    });
+
+</script>
+
+</html>

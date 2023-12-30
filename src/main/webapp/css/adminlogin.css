@@ -1,0 +1,69 @@
+.head{
+	width: 100%;
+	height: 100%;
+	 
+}
+.head-img{
+	width: 30%;
+	height: 900px;
+	float: left;
+	    background-position: 50%;
+	    background-size: cover;
+}
+.head-img img{
+	width: 100%;
+	height: 100%;
+}
+
+.head-login{
+	width: 70%;
+	height: 800px;
+	float: left;
+	 
+	
+}
+
+.login-tou{
+	
+	width: 100%;
+	height: 100px;
+	 
+}
+
+.login-tou img{
+	width: 150px;
+	height: 100px;
+}
+
+.login-zhong{
+	width: 100%;
+	height: 700px;
+	background-color: #FBFBFB;
+	 
+	
+}
+
+.zhong-div{
+	
+	width: 450px;
+	height: 550px;
+	margin: 0 auto;
+	position: relative;
+	top: 50px;
+	background-color: #FFFFFF;
+	 
+}
+
+.yc-login{
+	position: relative;
+	top: 75px;
+}
+
+.login-ul li{
+	 text-align: center;
+}
+
+.yc-tatl{
+	font-size:26px;
+	font-weight:bold;
+}

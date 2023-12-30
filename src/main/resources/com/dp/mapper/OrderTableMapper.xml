@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dp.mapper.OrderTableMapper">
+
+    <select id="selectList" resultType="java.util.Map">
+        SELECT o.o_id,
+               a_id,
+               u_id,
+               rder_time,
+               total_price,
+               total_time,
+               o_state,
+               od.param_id,
+               p_number,
+               o_price,
+               p.param_id,
+               p.color,
+               p.price,
+               p.memory_size,
+               pd.p_id,
+               pd.p_name,
+               pd.p_image
+        FROM order_table o
+        INNER JOIN order_details od ON o.o_id = od.o_id
+        LEFT JOIN parameter p ON od.param_id = p.param_id
+        LEFT JOIN prod_details pd ON pd.p_id = p.p_id
+        <where>
+            <if test="uId != null">
+                u_id = #{uId}
+            </if>
+            <if test="oState != null">
+                and o_state = #{oState}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

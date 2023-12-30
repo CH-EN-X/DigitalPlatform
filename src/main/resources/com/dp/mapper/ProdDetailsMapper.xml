@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dp.mapper.ProdDetailsMapper">
+
+
+  <!--  int update(Map<String,Object> map);-->
+    <update id="update">
+        update prod_details
+        set number = number+1
+        where p_id = #{pId}
+    </update>
+
+<!--    List<ProdDetails> recommend(Map<String,Object> map);-->
+    <select id="recommend" resultType="ProdDetails">
+
+        SELECT * FROM prod_details order by number desc limit 4;
+
+
+
+    </select>
+
+
+
+    <!--  public List<ProdDetails> finds(Map<String,Object> map);-->
+    <select id="finds" resultType="ProdDetails">
+        select * from prod_details
+        <where>
+            <if test="pId!=null">
+                and p_id = #{pId}
+            </if>
+
+            <if test="pName!=null  and &quot;&quot;!=pName">
+                <bind name="_pName" value="'%' + _parameter.pName + '%'"/>
+                and p_name like #{_pName}
+            </if>
+
+
+
+        </where>
+
+        <if test="page!=null  and limit !=null">
+            <bind name="_page" value="(_parameter.page-1)*_parameter.limit"/>
+            limit #{_page},#{limit}
+        </if>
+
+    </select>
+
+    <!--int ttal(Map<String,Object> map);-->
+
+    <select id="ttal" resultType="int">
+        select count(*) from  prod_details
+        <where>
+            <if test="pId!=null">
+                and p_id = #{pId}
+            </if>
+
+
+            <if test="pName!=null  and &quot;&quot;!=pName">
+                <bind name="_pName" value="'%' + _parameter.pName + '%'"/>
+                and p_name like #{_pName}
+            </if>
+
+
+
+        </where>
+
+    </select>
+
+
+
+
+
+
+
+    <select id="FindBalance" resultType="com.dp.entity.ProdDetails">
+        select stock from prod_details where p_id = #{obj.pId}
+    </select>
+
+    <select id="FindName" resultType="com.dp.entity.ProdDetails">
+        select p_name from prod_details where p_id = #{obj.pId}
+    </select>
+
+
+    <update id="BackUpdateStock">
+        update prod_details set stock = #{obj.stock}  where p_id = #{obj.pId}
+    </update>
+
+    <delete id="BackDelete">
+        delete from prod_details where p_id = #{obj.pId}
+    </delete>
+
+
+
+
+    <insert id="addGood" useGeneratedKeys="true" keyProperty="pId" >
+        insert into prod_details(p_name,t_id,stock,p_image) values(#{obj.pName},#{obj.tId},#{obj.stock},#{obj.pImage})
+    </insert>
+
+
+    <select id="FindAll" resultType="com.dp.entity.ProdDetails">
+        select * from prod_details
+    </select>
+
+
+
+
+    <select id="FindPage" resultType="java.util.Map">
+        select p_id, p_name, pd.t_id t_id, t_name, stock
+        from prod_details pd
+        inner join prod_type pt on pd.t_id = pt.t_id
+        <where>
+            <if test="obj != null">
+                <if test="obj.pId != null and obj.pId != &quot;&quot;">
+                    and p_id = #{obj.pId}
+                </if>
+                <if test="obj.pName != null and obj.pName != &quot;&quot;">
+                    and p_name = #{obj.pName}
+                </if>
+                <if test="obj.tId != null and obj.tId != &quot;&quot;">
+                    and pd.t_id = #{obj.tId}
+                </if>
+                <if test="obj.stock != null and obj.stock != &quot;&quot;">
+                    and stock = #{obj.stock}
+                </if>
+            </if>
+        </where>
+        <if test="page != null and limit != null">
+            LIMIT #{page}, #{limit}
+        </if>
+    </select>
+
+    <select id="total" resultType="java.lang.Integer">
+        select count(*)
+        from prod_details pd
+        inner join prod_type pt on pd.t_id = pt.t_id
+        <where>
+            <if test="obj != null">
+                <if test="obj.pId != null and obj.pId != &quot;&quot;">
+                    and p_id = #{obj.pId}
+                </if>
+                <if test="obj.pName != null and obj.pName != &quot;&quot;">
+                    and p_name = #{obj.pName}
+                </if>
+                <if test="obj.tId != null and obj.tId != &quot;&quot;">
+                    and pd.t_id = #{obj.tId}
+                </if>
+                <if test="obj.stock != null and obj.stock != &quot;&quot;">
+                    and stock = #{obj.stock}
+                </if>
+            </if>
+        </where>
+    </select>
+
+
+
+
+</mapper>
