@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>数码商品详情</title>
+
+    <script src="../js/vue.js"></script>
+    <link href="https://cdn.bootcss.com/element-ui/2.4.5/theme-chalk/index.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/element-ui/2.6.1/index.js"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="../image/logo.png"/>
+    <link rel="stylesheet" type="text/css" href="../layui/css/layui.css"/>
+
+    <link rel="stylesheet " type="text/css" href="../css/ProdDetail.css"/>
+</head>
+<body>
+<div class="digital">
+    <!-- 头部 -->
+    <div class="head">
+        <div class="head-x ">
+            <div class="head-x-css">
+						<span class="layui-breadcrumb" lay-separator="|">
+						  <a id="login_state" href="login.html">您好，请登录</a>
+						  <a href="register.html">免费注册</a>
+						  <a href="#">帮助中心</a>
+						  <a href="#">客服</a>
+						   
+						</span>
+
+            </div>
+        </div>
+        <!-- 搜索框 -->
+        <div class="head-s">
+            <ul class="head-s-css">
+
+                <li class="css-logo"><img src="../image/logo.png"/></li>
+                <li class="css-text">
+                    <ul class="text-ul1">
+                        <li class="text"><input  id="content" type="text" name="title"   placeholder=" 请输入搜索内容"  class="text-input"/> </li>
+                        <li class="text-s">  <a  id="select"  class="text-btn" href="javascript:void(0)"  ><img src="../image/搜索.png"/></a>  </li>
+
+
+                    </ul>
+
+                    <ul class="layui-tab-title">
+                        <li class="layui-this"><a href="index.html"> 首页</a></li>
+                        <li><a   href="type.html#手机款式 "> 手机款式</a></li>
+                        <li><a   href="type.html#电脑整机"> 电脑整机</a></li>
+                        <li><a   href="type.html#平板类型"> 平板类型</a></li>
+                        <li><a   href="type.html#影音娱乐"> 影音娱乐</a></li>
+                        <li><a   href="type.html#摄影摄像"> 摄影摄像</a></li>
+                    </ul>
+                </li>
+                <!--头像-->
+                <li class="css-touxiang"><a href="#"> <img id="touxiang" src="../image/logo.png"/></a></li>
+
+                <!-- 购物车 -->
+                <li class="css-vehicle">
+                    <div class="vehicle-img"><a href="#"> <img src="../image/购物车.png"/> </a></div>
+                    <div  class="vehicle-text"> <span><a href="#">   我的购物车    </a></span></div>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+    </div>
+
+    <!-- 主体 -->
+    <div class="main" id="prods">
+        <div class="main-in">
+            <div class="main-in-left">{{name}}</div>
+            <div class="main-in-right">
+						<span class="layui-breadcrumb" lay-separator="|">
+						  <a href="nav.html">用户评价</a>
+						</span>
+            </div>
+        </div>
+        <div style="width: 100%;height: auto;box-shadow: 0px 3px 6px  #CCCCCC;">
+            <hr/>
+        </div>
+
+        <div class="main-main">
+            <div class="main-pics">
+                <div class="layui-carousel" id="test10">
+                    <div carousel-item="">
+                        <div v-for="p in pics"><img :src="p"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="main-paramter">
+                <div style="margin-bottom: 20px;"><h2>{{name}}</h2></div>
+                <div style="margin: 20px auto;"><p style="color: red;">小米自营</p></div>
+                <hr/>
+                <div class="main-paramter-addr">
+                    <div><img src="../image/addr.png"></div>
+                    <div class="addr-info">
+                        <span>湖南</span>
+                        <span>衡阳市</span>
+                        <span>珠晖区</span>
+                        <span>湖南公学院</span>
+                    </div>
+                    <a id="updateAddr" style="color: red;" href="javascript:void(0)">修改</a>
+                    <div class="banlance-judge"><span style="color: red;">{{stock}}</span></div>
+                </div>
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                    <legend>选择版本</legend>
+                </fieldset>
+                <div>
+                    <ul class="select-version">
+                        <li v-for="m in memorySizes"><a class="selected version" href="javascript:void(0)"
+                                                        onclick="upCss1(this)">{{m}}</a></li>
+                    </ul>
+                </div>
+
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                    <legend>选择颜色</legend>
+                </fieldset>
+                <div>
+                    <ul class="select-color">
+                        <li v-for="c in colors"><a class="selected color" href="javascript:void(0)"
+                                                   onclick="upCss2(this)">{{c}}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="after">
+            <div class="after-service">
+
+            </div>
+            <div class="select-list">
+                <div class="select-list-p">
+                    <span>{{name}}</span>
+                    <span>{{memorySize}}</span>
+                    <span>{{color}}</span>
+                </div>
+                <span class="total-price" style="color: red;">总计：{{prices}}元</span>
+                <a class="addcart" href="javascript:void(0)" onclick="addCart()">添加购物车</a>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- 尾部 -->
+    <div class="footer"></div>
+</div>
+</body>
+
+<script src="../layui/layui.js"></script>
+<script src="../js/jquery-3.4.1.min.js"></script>
+<script src="../js/vue.js"></script>
+<script src="../js/axios.js"></script>
+
+<script>
+
+
+    function upCss1(obj) {
+        $(".version").css("color", "black");
+        $(".version").css("border", "1px solid #e0e0e0");
+        $(obj).css("color", "red");
+        $(obj).css("border", "1px solid red");
+        let text = $(obj).text();
+        v.memorySize = text;
+        $.get("../parameter?op=FindPrice", {memorySize: text}, function (rs) {
+            if (rs.code == 200) {
+                let Price = '';
+                Price = rs.data[0].price;
+                v.prices = Price;
+            } else {
+                layer.msg(rs.msg);
+            }
+        }, 'json');
+    }
+
+    function upCss2(obj) {
+        $(".color").css("color", "black");
+        $(".color").css("border", "1px solid #e0e0e0");
+        $(obj).css("color", "red");
+        $(obj).css("border", "1px solid red");
+        let text = $(obj).text();
+        v.color = text;
+    }
+
+    layui.use(['carousel', 'form'], function () {
+        var carousel = layui.carousel
+            , form = layui.form;
+
+        //图片轮播
+        carousel.render({
+            elem: '#test10'
+            , width: '560px'
+            , height: '576px'
+            , interval: 3000
+        });
+
+        //检查是否登录
+        lg();
+
+        $("#updateAddr").click(function () {
+            //iframe 层
+
+            layer.open({
+                type: 2,
+                title: '修改收货地址',
+                shadeClose: true,
+                shade: false,
+                maxmin: true, //开启最大化最小化按钮
+                area: ['893px', '600px'],
+                content:''
+            });
+        });
+
+    });
+
+    let path = window.location.hash;
+    //地址必须是detail.html#3
+    if(path.indexOf("#") < 0){
+        //地址不正确 跳转到电影页面
+        window.location.href = 'index.html';
+    }
+
+    let pId =  path.substring(1) ;//获取pId
+    let uId;
+
+
+    //检测是否登录
+    function lg() {
+
+
+        //session里存储   uId
+        $.get("../user",{op:"determine" },function (rs) {
+
+            if(rs !=null){
+
+                $("#login_state").text("在线！"); // 修改文本
+                uId= rs;
+
+            }
+
+        },"json");
+
+
+    }
+
+
+    $("#select").click(function () {
+
+        let pName = $("#content").val();
+        if( pName!=null && ""!=pName){
+
+            //session里存储   pName
+            $.get("../prodDetails",{op:"cpName",pName:pName },function (rs) {
+
+
+                if(rs!=null){
+                    window.location.href = 'index.html';
+                }
+
+
+            },"json");
+
+
+        }
+        else{
+
+            alert('暂无相关商品！！！');
+        }
+
+
+    });
+
+
+
+    //跳转用户个人信息页面
+    $("#touxiang").click(function () {
+
+        window.location.href = 'personal.html';
+
+    });
+
+
+
+
+
+
+
+
+
+    var v = new Vue({
+        el: '#prods',
+        data: {
+            prods: [],
+
+            pId: pId,
+            pics: [],
+            colors: [],
+            memorySizes: [],
+            prices: '',
+            memorySize: '',
+            color: '',
+            stock: '',
+            name: '',
+        },
+        methods: {},
+        mounted: function () {
+            axios.get('../parameter?op=FindByPid&pId=' + this.pId).then(rs => {
+                if (rs.status == 200) {
+                    this.prods = rs.data.data;
+                    changePics(this.prods);
+                    changeColor(this.prods);
+                    changeMemory(this.prods);
+                    /*changePrice(this.prods);*/
+                }
+            });
+
+            axios.get('../prodDetails?op=FindBalance&pId=' + this.pId).then(rs => {
+                if (rs.status == 200) {
+                    if (rs.data.data.stock > 0) {
+                        this.stock = '有现货';
+                    } else {
+                        this.stock = '该地区暂时缺货';
+                    }
+                }
+            });
+
+            axios.get('../prodDetails?op=FindName&pId=' + this.pId).then(rs => {
+                if (rs.status == 200) {
+                    this.name = rs.data.data.pName;
+                }
+            });
+        }
+    });
+
+
+    function changePics(arr) {
+        let fpics = '';
+        for (let i = 0; i < arr.length; i++) {
+            if (fpics.indexOf(arr[i].paramImage) < 0) {
+                fpics += arr[i].paramImage + ";";
+            }
+        }
+        if (fpics.lastIndexOf(";") > 0) {
+            fpics = fpics.substr(0, fpics.lastIndexOf(";"));
+        }
+        v.pics = fpics.split(";")
+
+    }
+
+    function changeColor(arr) {
+        let colors = '';
+        for (let i = 0; i < arr.length; i++) {
+            if (colors.indexOf(arr[i].color) < 0) {
+                colors += arr[i].color + ";";
+            }
+        }
+        if (colors.lastIndexOf(";") > 0) {
+            colors = colors.substr(0, colors.lastIndexOf(";"));
+        }
+        v.colors = colors.split(";")
+    }
+
+    function changeMemory(arr) {
+        let memory = '';
+        for (let i = 0; i < arr.length; i++) {
+            if (memory.indexOf(arr[i].memorySize) < 0) {
+                memory += arr[i].memorySize + ";";
+            }
+        }
+        if (memory.lastIndexOf(";") > 0) {
+            memory = memory.substr(0, memory.lastIndexOf(";"));
+        }
+        v.memorySizes = memory.split(";")
+    }
+
+
+    /*function changePrice(arr) {
+        let prices = '';
+        for (let i = 0; i < arr.length; i++) {
+            if(prices.indexOf(arr[i].price) < 0){
+                prices += arr[i].price + ";";
+            }
+        }
+        if(prices.lastIndexOf(";") > 0){
+            prices = prices.substr(0,prices.lastIndexOf(";"));
+        }
+        v.prices = prices.split(";")
+    }*/
+
+    function addCart() {
+
+        if (v.memorySize == "" || v.memorySize == null || v.color == "" || v.color == null) {
+            layui.use('layer', function () { //独立版的layer无需执行这一句
+                var layer = layui.layer; //独立版的layer无需执行这一句
+                layer.alert("请选择商品参数！");
+            });
+            return;
+        }
+        $.get('../parameter?op=find', {color: v.color, memorySize: v.memorySize}, function (rs) {
+            if (rs.code == 200) {
+                let paramId = rs.data;
+                $.get("../cart?op=addCart", {uId: uId, paramId: paramId, cNumber: 1}, function (rs) {
+                    if (rs.code == 200) {
+                        layui.use('layer', function () { //独立版的layer无需执行这一句
+                            var layer = layui.layer; //独立版的layer无需执行这一句
+                            layer.alert("添加购物车成功！");
+                        });
+                    }
+                }, 'json');
+            }
+        }, 'json');
+
+
+    }
+
+
+</script>
+
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>充值</title>
+    <script src="../js/vue.js"></script>
+    <link href="https://cdn.bootcss.com/element-ui/2.4.5/theme-chalk/index.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/element-ui/2.6.1/index.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <script src="../layui/layui.js"></script>
+    <style>
+
+        /* - 侧边栏 */
+        .sidebar {
+            top: 0;
+            left: 0;
+            bottom: 0;
+            color: #fff;
+            width: 250px;
+            position: fixed;
+            overflow: hidden;
+            overflow-y: auto;
+            background: #4b4b4b;
+        }
+
+        /* -- 头像 */
+        .sidebar .avatar {
+            width: 160px;
+            height: 160px;
+            margin: 2em auto;
+            background: #fff;
+            border-radius: 100%;
+            border: #fff 5px solid;
+            transition: transform 0.5s;
+        }
+
+        .sidebar .avatar:hover {
+            transform: rotate(1turn);
+        }
+
+        .sidebar .avatar img {
+            border-radius: 100%;
+        }
+
+        /* -- 侧边栏导航 */
+        .sidebar .nav {
+            margin: 0;
+            display: flex;
+            list-style: none;
+            flex-direction: column;
+        }
+
+        .sidebar .nav a {
+            color: #fff;
+            padding: 1em;
+            display: block;
+            text-align: center;
+            transition: background .3s, box-shadow .3s;
+        }
+
+        .sidebar .nav a:hover {
+            background: rgba(0, 0, 0, .2);
+        }
+    </style>
+
+</head>
+<body>
+
+
+<div id="recharge" style="margin: 0 50px 0 45px;">
+
+    <aside class="sidebar">
+        <div class="avatar">
+            <img :src="headshot" title="Chien_W"/>
+        </div>
+        <nav class="nav">
+            <a href="user.html">个人信息</a>
+            <a href="recharge.html">充值</a>
+            <a href="order.html">订单</a>
+
+
+        </nav>
+    </aside>
+
+
+    <div style="margin-left: 50px;margin: 0 50px 0 200px;width: 94%;">
+
+        <div style="background-color: #01AAED; width: 100%;line-height: 90px;font-size: 15px;border: 1px solid gray;color: white;">
+            <i class="layui-icon layui-icon-dollar" style="font-size: 30px;color: #FFD471;margin-left: 10px;"></i>
+            <span style="font-size: 30px">充值中心</span>
+            <!-- <div>1、</div>
+            <div>2、充值充值充值充值充值充值充值充值充值充值充值充值充值充值充值充值</div> -->
+
+        </div>
+
+
+        <div style="width: 100%; ">
+
+
+            <span><br></span>
+            <div style="background-color: #DCF0F7;width: 85%;line-height: 100px; margin-left: 4%;">
+                <div style="margin: 0 30px 0 30px;">
+                    <img :src="headshot" style="width: 80px;height: 80px;border-radius: 50%;overflow: hidden;"/>
+                    <span> 充值账号：{{uPhone}}</span>
+                    <span name="balance" style="float: right;"> 账户余额：￥{{balance}}</span>
+                </div>
+            </div>
+
+            <div style="margin: 30px 0 0 50px;">
+
+                <div style="width: 80%;line-height: 80px;">
+                    <el-button :type="selectedAmount === 10 ? 'primary' : 'default'" @click="selectAmount(10)">10元
+                    </el-button>
+                    <el-button :type="selectedAmount === 50 ? 'primary' : 'default'" @click="selectAmount(50)">50元
+                    </el-button>
+                    <el-button :type="selectedAmount === 100 ? 'primary' : 'default'" @click="selectAmount(100)">100元
+                    </el-button>
+                    <!--                    <div v-if="selectedAmount !== 0" style="display: inline-block; margin-left: 20px;">-->
+                    <!--                        <i class="el-icon-check" style="color: #67C23A;"></i>-->
+                    <!--                        <span style="color: #67C23A;">已选：{{ selectedAmount }}元</span>-->
+                    <!--                    </div>-->
+                    <input type="text" v-model="customAmount" @input="clearSelection" placeholder="其他金额"
+                           style="width: 80px; height: 36px; padding: 0 10px; margin-left: 20px;">
+                    <!--                    <span v-if="selectedAmount">已选：{{ selectedAmount }}元</span>-->
+                </div>
+
+                <div>
+                    <span> 充值方法 ： </span>
+
+                    <span>
+                        <input type="radio" name="paymentMethod" value="wechat" title="微信支付"
+                               v-model="selectedPaymentMethod">
+                        <img src="../image/wxPay.png" @click="selectPayment('wechat')"
+                             :class="{ 'selected': selectedPaymentMethod === 'wechat' }">微信支付
+                    </span>
+                    <span style="margin-left: 50px;">
+                        <input type="radio" name="paymentMethod" value="alipay" title="支付宝支付"
+                               v-model="selectedPaymentMethod">
+                        <img src="../image/zfbPay.png" @click="selectPayment('alipay')"
+                             :class="{ 'selected': selectedPaymentMethod === 'alipay' }">支付宝支付
+                    </span>
+
+
+                    <!--                    <div style="font-size: 20px;margin: 40px 0 70px 0;">-->
+                    <!--                        <span>应付金额： {{selectedAmount}} 元</span>-->
+                    <!--                    </div>-->
+
+                    <div style="line-height: 20px;margin-top: 20px">
+                        <button type="button" class="layui-btn layui-btn-lg" @click="recharge()">确认充值</button>
+                        <!--                        <span>温馨提示：。。。。。。</span>-->
+                    </div>
+
+                </div>
+
+                <div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="../layui/layui.js"></script>
+<script src="../js/axios.js"></script>
+
+
+<script>
+
+    let app = new Vue({
+        el: '#recharge',
+        data: {
+            headshot:'',
+            user: [],
+            uPhone: 0,
+            balance: 0,
+            selectedAmount: 0,
+            customAmount: '',
+            selectedPaymentMethod: 'wechat'
+        },
+        methods: {
+
+            openPaymentWindow(url) {
+                const width = 800;
+                const height = 600;
+                const left = window.innerWidth / 2 - width / 2;
+                const top = window.innerHeight / 2 - height / 2;
+
+                const paymentWindow = window.open(url, 'payment', 'width=${width},height=${height},left=${left},top=${top}'); // 打开支付页面的弹窗
+                paymentWindow.focus(); // 将焦点设置到支付页面的弹窗
+
+                // 监听支付页面的弹窗关闭事件
+                paymentWindow.addEventListener('beforeunload', () => {
+                    // 在支付完成后关闭弹窗
+                    if (paymentWindow.closed) {
+                        window.close();
+                    }
+                });
+            },
+
+            selectAmount(amount) {
+                this.selectedAmount = amount;
+                this.customAmount = '';
+            },
+
+            selectPayment(paymentMethod) {
+                this.selectedPaymentMethod = paymentMethod;
+            },
+            selectCustomAmount() {
+                if (this.customAmount !== '') {
+                    this.selectedAmount = customAmount;
+                }
+            },
+            clearSelection() {
+                this.selectedAmount = 0;
+            },
+            // 获取到name=后的数据
+            GetQueryString(name)
+            {
+                let query = window.location.search.substring(1);
+                let vars = query.split("&");
+                for (let i=0;i<vars.length;i++) {
+                    let pair = vars[i].split("=");
+                    if(pair[0] == variable){return pair[1];}
+                }
+                return(false);
+            },
+
+            // 打开支付窗口
+            openPaymentWindow(url) {
+              return new Promise(function(resolve, reject) {
+                const _this = this;
+                const width = 800;
+                const height = 600;
+                const left = window.innerWidth / 2 - width / 2;
+                const top = window.innerHeight / 2 - height / 2;
+
+                let paymentWindow = window.open( url, 'payment', 'width=${width},height=${height},left=${left},top=${top}'); // 打开支付页面的弹窗
+                paymentWindow.focus(); // 将焦点设置到支付页面的弹窗
+
+
+
+                // 监听支付窗口的关闭事件
+                const checkWindowClosed = setInterval(function() {
+                    if (paymentWindow.closed) {
+                        clearInterval(checkWindowClosed); // 停止定时器
+                        resolve(); // 支付窗口关闭时调用resolve方法
+                    }
+                }, 1000); // 每隔1秒检查支付窗口是否关闭
+
+              });
+            },
+
+            //确认充值
+            recharge() {
+                const _this = this;
+                // 不是默认金额，是其他金额
+                if (_this.customAmount != '') {
+                    _this.selectedAmount = _this.customAmount;
+                }
+                // 如果金额为0，提醒
+                if (this.selectedAmount) {
+                    //修改金额
+                    _this.user.balance += _this.selectedAmount;
+                    let data = _this.user;
+
+                    //支付宝沙箱http://localhost:8888/alipay/pay?subject=测试商品&traceNo= 666&totalAmount=1000
+                    axios.get("../pay", {
+                        params: {
+                            // subject:'商品名',
+                            // traceNo: 数量,
+                            total_amount: _this.selectedAmount  // 传递金额参数给后端
+                        }
+                    }).then(response => {
+                        layer.open({
+                            title: '订单发送完毕',
+                            content: '点击跳转支付界面',
+                            btn: ['确定'],
+                            yes: function (index, layero) {
+                                // 关闭弹窗
+                                layer.close(index);
+                                _this.openPaymentWindow(response.data).then(()=> {
+                                    axios.get('../queryTrade').then((response)=>{
+                                        if (response.status == 200) {
+                                            layer.open({
+                                                title: '支付成功',
+                                                content: '点击关闭',
+                                                btn: ['确定'],
+                                                yes: function (index, layero) {
+                                                    // 支付成功 加上你的操作
+                                                    axios.post('../user?op=updateInfo', data).then((rs) => {
+                                                        layer.msg('充值成功');
+                                                        //刷新
+                                                        _this.loading();
+                                                    }).catch(function (error) {
+                                                        layer.msg('充值失败');
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    })
+
+                                });
+
+
+
+
+
+                            }
+                        });
+
+                    }).catch(error => {
+                        layer.msg(error);
+                    });
+                } else {
+                    layer.msg('金额不能为0')
+                }
+            },
+
+            /**
+             * 统一请求处理
+             */
+            loading() {
+                const _this = this;
+
+                axios.get('../user?op=findById&id=1').then((rs) => {
+                    _this.balance = rs.data.balance;
+                    _this.uPhone = rs.data.uPhone;
+                    console.log(rs.data.balance);
+
+                    //将user保存
+                    _this.user = rs.data;
+                })
+                    .catch(error => {
+
+                    });
+
+
+            }
+            ,
+        },
+        mounted() {
+            const _this = this;
+            _this.headshot = localStorage.getItem("headshotUrl");
+            _this.loading();
+        }
+
+    })
+
+</script>
+
+</body>
+</html>
